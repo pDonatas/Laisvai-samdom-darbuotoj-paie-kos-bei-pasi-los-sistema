@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/password-change', 'UserController@password_change')->name('password-change');
+Route::post('/password-change', 'UserController@store_password')->name('store-password');
