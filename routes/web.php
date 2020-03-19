@@ -22,3 +22,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'UserController@password_change')->name('password-change');
 Route::post('/password-change', 'UserController@store_password')->name('store-password');
+Route::get('/lt', function(){
+    session(['user_locale' => 'lt']);
+    return redirect()->back();
+});
+Route::get('/en', function(){
+    session(['user_locale' => 'en']);
+    return redirect()->back();
+});
