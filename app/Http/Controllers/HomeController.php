@@ -25,4 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function FAQ()
+    {
+        return view('faq');
+    }
+    public function TermsOfService()
+    {
+        return view('termsofservice');
+    }
 }

@@ -30,3 +30,12 @@ Route::get('/en', function(){
     session(['user_locale' => 'en']);
     return redirect()->back();
 });
+Route::get('/faq', 'HomeController@faq')->name('faq');
+Route::get('/termsofservice', 'HomeController@termsofservice')->name('termsofservice');
+Route::get('/posts/create', 'PostController@create')->name('posts.create');
+Route::post('/posts/store', 'PostController@store')->name('posts.store');
+Route::get('/posts/index', 'PostController@index')->name('posts.index');
+Route::get('/posts/show', 'PostController@show')->name('posts.show');
+Route::get('/posts/destroy', 'PostController@destroy')->name('posts.destroy');
+Route::get('/posts/edit', 'PostController@edit')->name('posts.edit');
+Route::get('/posts/update', 'PostController@update')->name('posts.update');
