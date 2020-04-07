@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -29,8 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        // Show create post form
-        return view('posts.create');
+        // Show create post for
+        $categories = Category::all();
+        return view('posts.create',['categories'=>$categories]);
     }
 
     /**

@@ -29,11 +29,14 @@
             <div class="control">
                 <div class="select">
                     <select name="category" required>
-                        <option value="" disabled selected>Select category</option>
+                   <!--     <option value="" disabled selected>Select category</option>
                         <option value="html" {{ old('category') === 'html' ? 'selected' : null }}>HTML</option>
                         <option value="css" {{ old('category') === 'css' ? 'selected' : null }}>CSS</option>
                         <option value="javascript" {{ old('category') === 'javascript' ? 'selected' : null }}>JavaScript</option>
-                        <option value="php" {{ old('category') === 'php' ? 'selected' : null }}>PHP</option>
+                        <option value="php" {{ old('category') === 'php' ? 'selected' : null }}>PHP</option>-->
+                       @foreach($categories as $category)
+                           <option value="{{$category->id}}">{{$category->name}}</option>
+                       @endforeach
                     </select>
                 </div>
             </div>

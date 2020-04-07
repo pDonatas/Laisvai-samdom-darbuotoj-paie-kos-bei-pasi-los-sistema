@@ -4,7 +4,7 @@
     </div>
     <div>
     <p><b>Posted:</b> {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
-        <p><b>Category:</b> {{ $post->category }}</p>
+        <p><b>Category:</b> {{ App\Category::find($post->category)->first()->name}}</p>
         <p>{!! nl2br(e($post->content)) !!}</p> </div></div>
 
     <form method="post" action="{{ route('posts.destroy', [$post->slug]) }}">
