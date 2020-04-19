@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
+
+    public function home(){
+        $post = new Post();
+        $posts = $post->all();
+
+        return view('home.index', compact('posts'));
+    }
 
     /**
      * Show the application dashboard.

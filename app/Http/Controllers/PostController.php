@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -52,6 +53,7 @@ class PostController extends Controller
 
         // Create slug from title
         $validated['slug'] = Str::slug($validated['title'], '-');
+        $validated['user_id'] = Auth::id();
 
         // Create and save post with validated data
         $post = Post::create($validated);
@@ -66,8 +68,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($post)
     {
+        $post = Post::where('slug', $post)->first();
         // Pass current post to view
         return view('posts.show', compact('post'));
     }
