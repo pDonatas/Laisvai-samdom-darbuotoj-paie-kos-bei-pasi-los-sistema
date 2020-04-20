@@ -81,9 +81,14 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($post)
     {
-        return view('posts.edit', compact('post'));
+        $post = Post::where('slug', $post)->first();
+        $categories = Category::all();
+        return view('posts.edit', [
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -93,8 +98,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $post)
     {
+        $post = Post::where('slug', $post)->first();
         // Validate posted form data
         $validated = $request->validate([
             'title' => 'required|string|unique:posts|min:5|max:100',
@@ -118,8 +124,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($post)
     {
+        $post = Post::where('slug', $post)->first();
         // Delete the specified Post
         $post->delete();
 
