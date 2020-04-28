@@ -13,5 +13,5 @@ return [
     'Edit' => 'Edit',
     'Update' => 'Update',
     'posted' => 'Posted:',
-    'Delete' => 'Delete'
+    'Delete' => 'Delete',
 ];

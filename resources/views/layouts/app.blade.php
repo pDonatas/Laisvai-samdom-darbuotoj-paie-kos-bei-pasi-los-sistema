@@ -48,6 +48,11 @@
                 </li>
             @endauth
         </ul>
+        <form class="form-inline my-2 my-lg-0" action="search" method="post">
+            @csrf
+            <input class="form-control mr-sm-2" name="search" type="search" placeholder="{{__('page.search')}}" aria-label="{{__('page.search')}}" required>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{{__('page.search')}}</button>
+        </form>
     </div>
 </nav>
 <div class="container">
