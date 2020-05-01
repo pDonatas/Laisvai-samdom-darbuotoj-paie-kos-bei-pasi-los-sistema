@@ -32,6 +32,9 @@
             @endif
         </div>
         <div class="card-footer">
+            <!—- ShareThis BEGIN -—>
+            <script async src="https://platform-api.sharethis.com/js/sharethis.js#property=5eac0d0e3c3da40012262fdb&product=sticky-share-buttons"></script>
+            <!—- ShareThis END -—>
             <div class="row">
                 <div class="col-md-6">
                     {{__('ratings.title')}}: {{$rate}}
