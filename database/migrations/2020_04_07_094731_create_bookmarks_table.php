@@ -10,9 +10,9 @@ class CreateBookmarksTable extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('model_type');
-            $table->integer('model_id');
-            $table->bigInteger('user_id');
+            $table->integer('post');
+            $table->integer('user_id');
+            $table->timestamps();
         });
     }
 

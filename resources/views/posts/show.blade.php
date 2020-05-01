@@ -32,20 +32,31 @@
             @endif
         </div>
         <div class="card-footer">
-            {{__('ratings.title')}}: {{$rate}}
-            @if(!\App\Http\Services\RatingsService::voted(Auth::id(), $post->id))
-                <form method="post" action="{{route('vote', $post->id)}}">
-                    @csrf
-                    <select name="vote" class="form-control" required>
-                        <option selected disabled>{{__('ratings.choose_vote')}}</option>
-                        <?php
-                        for($i = 1; $i <= 10; $i++)
-                        echo '<option value="'.$i.'">'.$i.' '.trans('ratings.votes').'</option>';
-                        ?>
-                    </select>
-                    <input type="submit" class="form-control btn btn-primary" value="{{__('ratings.vote')}}"/>
-                </form>
-            @endif
+            <div class="row">
+                <div class="col-md-6">
+                    {{__('ratings.title')}}: {{$rate}}
+                    @if(!\App\Http\Services\RatingsService::voted(Auth::id(), $post->id))
+                        <form method="post" action="{{route('vote', $post->id)}}">
+                            @csrf
+                            <select name="vote" class="form-control" required>
+                                <option selected disabled>{{__('ratings.choose_vote')}}</option>
+                                <?php
+                                for($i = 1; $i <= 10; $i++)
+                                    echo '<option value="'.$i.'">'.$i.' '.trans('ratings.votes').'</option>';
+                                ?>
+                            </select>
+                            <input type="submit" class="form-control btn btn-primary" value="{{__('ratings.vote')}}"/>
+                        </form>
+                    @endif
+                </div>
+                <div class="col-md-6 text-right">
+                    @if(!\App\Http\Services\BookmarksService::isBookmarked($post->id))
+                        <a href="{{route('bookmark', $post->id)}}">{{__('favorites.add')}}</a>
+                    @else
+                        <a href="{{route('bookmark', $post->id)}}">{{__('favorites.remove')}}</a>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 @endsection
