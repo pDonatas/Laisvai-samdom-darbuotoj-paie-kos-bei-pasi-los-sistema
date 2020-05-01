@@ -9,6 +9,11 @@
                 <p><b>{{__('posts.posted')}}</b> {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
                 <p><b>{{__('posts.Category')}}</b> {{ App\Category::find($post->category)->first()->name}}</p>
                 <p>{!! nl2br(e($post->content)) !!}</p>
+                @if(\App\Http\Services\TagsService::hasTags($post->id))
+                    <div class="text-right">
+                        {{__('tags.tags')}}: {{\App\Http\Services\TagsService::showTags($post->id)}}
+                    </div>
+                @endif
             </div>
             @if(Auth::id() == $post->user_id)
             <form method="post" action="{{ route('posts.destroy', $post->slug) }}">

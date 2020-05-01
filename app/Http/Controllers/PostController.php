@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
 use App\Category;
 use App\Http\Services\RatingsService;
+use App\Http\Services\TagsService;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +64,9 @@ class PostController extends Controller
 
         // Create and save post with validated data
         $post = Post::create($validated);
+        //Gaunam tagus ir juos issaugom
+        $ts = new TagsService();
+        $ts->SaveTags($post->id, $request->input('tags'));
 
         // Redirect the user to the created post with a success notification
         return redirect(route('posts.show', [$post->slug]))->with('notification', 'Post created!');
@@ -117,7 +122,7 @@ class PostController extends Controller
         if($post->user_id == Auth::id()) {
             // Validate posted form data
             $validated = $request->validate([
-                'title' => 'required|string|unique:posts|min:5|max:100',
+                'title' => 'required|string|min:5|max:100',
                 'content' => 'required|string|min:5|max:2000',
                 'category' => 'required|string|max:30'
             ]);
@@ -128,8 +133,11 @@ class PostController extends Controller
             // Update Post with validated data
             $post->update($validated);
 
+            $ts = new TagsService();
+            $ts->UpdateTags($post->id, $request->input('tags'));
+
             // Redirect the user to the created post woth an updated notification
-            return redirect(route('posts.index', [$post->slug]))->with('notification', 'Post updated!');
+            return redirect(route('posts.show', [$post->slug]))->with('notification', 'Post updated!');
         }else return redirect()->back();
     }
 
@@ -145,9 +153,14 @@ class PostController extends Controller
         if($post->user_id == Auth::id()) {
             // Delete the specified Post
             $post->delete();
+            $rs = new RatingsService();
+            $ts = new TagsService();
+            $rs->RemoveAll($post->id);
+            $ts->RemoveAll($post->id);
+            Bookmark::where('post', $post->id)->delete();
 
             // Redirect user with a deleted notification
-            return redirect(route('posts.index'))->with('notification', '"' . $post->title . '" deleted!');
+            return redirect(route('home'));
         }else{
             return redirect()->back();
         }

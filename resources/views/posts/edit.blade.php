@@ -38,6 +38,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="label">{{__('tags.tags')}} {{__('tags.delimiter')}}</label>
+                    <div>
+                        <input class="form-control" type="text" name="tags" value="{{\App\Http\Services\TagsService::showTags($post->id)}}"/>
+                    </div>
+                </div>
+
                 <div class="field">
                     <div class="control">
                         <button type="submit" class="btn btn-primary">{{__('posts.Update')}}</button>

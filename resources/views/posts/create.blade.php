@@ -20,7 +20,7 @@
         <div class="field">
             <label class="label">{{__('posts.Content')}}</label>
             <div class="control">
-                <textarea class="form-control" name="content" class="textarea" placeholder="Content" minlength="5" maxlength="2000" required rows="10">{{ old('content') }}</textarea>
+                <textarea class="form-control" name="content" class="textarea" placeholder="{{__('posts.Content')}}" minlength="5" maxlength="2000" required rows="10">{{ old('content') }}</textarea>
             </div>
         </div>
 
@@ -34,6 +34,13 @@
                        @endforeach
                     </select>
                 </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="label">{{__('tags.tags')}} {{__('tags.delimiter')}}</label>
+            <div>
+                <input class="form-control" type="text" name="tags"/>
             </div>
         </div>
 
