@@ -81,6 +81,7 @@ class PostController extends Controller
     public function show($post)
     {
         $post = Post::where('slug', $post)->first();
+        if(!$post) abort(404);
         $rate = RatingsService::overall($post->id);
         // Pass current post to view
         return view('posts.show', [

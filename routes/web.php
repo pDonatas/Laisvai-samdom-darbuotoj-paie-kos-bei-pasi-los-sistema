@@ -51,3 +51,5 @@ Route::post('sort', 'RatingController@sort')->name('sort');
 Route::get('bookmark/{post}', "BookmarkController@bookmark")->name('bookmark');
 //Vartotojai
 Route::get('user/{id}', 'UserController@show')->name('user');
+//Istorija
+Route::get('history', 'HistoryController@index')->name('history');

@@ -5,5 +5,6 @@ return [
     'password' => 'Slaptažodis',
     'new_password' => 'Naujas slaptažodis',
     'wrong_pass' => 'Įvestas slaptažodis yra neteisingas',
-    'pass_changed' => 'Slaptažodis pakeistas sėkmingai'
+    'pass_changed' => 'Slaptažodis pakeistas sėkmingai',
+    'history' => 'Naršymo istorija'
 ];
