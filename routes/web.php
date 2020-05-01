@@ -44,3 +44,5 @@ Route::post('/contacts', 'GuestController@contactform')->name(('contactform'));
 Route::get('/privacypolicy', 'GuestController@privacypolicy')->name('privacypolicy');
 //Paieška
 Route::post("/search", "SearchController@search")->name('search');
+//Balsavimas
+Route::post('vote/{id}', 'RatingController@vote')->name('vote');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Services\RatingsService;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,10 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,8 +76,12 @@ class PostController extends Controller
     public function show($post)
     {
         $post = Post::where('slug', $post)->first();
+        $rate = RatingsService::overall($post->id);
         // Pass current post to view
-        return view('posts.show', compact('post'));
+        return view('posts.show', [
+            'post' => $post,
+            'rate' => $rate
+        ]);
     }
 
     /**
@@ -84,11 +93,15 @@ class PostController extends Controller
     public function edit($post)
     {
         $post = Post::where('slug', $post)->first();
-        $categories = Category::all();
-        return view('posts.edit', [
-            'post' => $post,
-            'categories' => $categories
-        ]);
+        if($post->user_id == Auth::id()) {
+            $categories = Category::all();
+            return view('posts.edit', [
+                'post' => $post,
+                'categories' => $categories
+            ]);
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -101,21 +114,23 @@ class PostController extends Controller
     public function update(Request $request, $post)
     {
         $post = Post::where('slug', $post)->first();
-        // Validate posted form data
-        $validated = $request->validate([
-            'title' => 'required|string|unique:posts|min:5|max:100',
-            'content' => 'required|string|min:5|max:2000',
-            'category' => 'required|string|max:30'
-        ]);
+        if($post->user_id == Auth::id()) {
+            // Validate posted form data
+            $validated = $request->validate([
+                'title' => 'required|string|unique:posts|min:5|max:100',
+                'content' => 'required|string|min:5|max:2000',
+                'category' => 'required|string|max:30'
+            ]);
 
-        // Create slug from title
-        $validated['slug'] = Str::slug($validated['title'], '-');
+            // Create slug from title
+            $validated['slug'] = Str::slug($validated['title'], '-');
 
-        // Update Post with validated data
-        $post->update($validated);
+            // Update Post with validated data
+            $post->update($validated);
 
-        // Redirect the user to the created post woth an updated notification
-        return redirect(route('posts.index', [$post->slug]))->with('notification', 'Post updated!');
+            // Redirect the user to the created post woth an updated notification
+            return redirect(route('posts.index', [$post->slug]))->with('notification', 'Post updated!');
+        }else return redirect()->back();
     }
 
     /**
@@ -127,10 +142,14 @@ class PostController extends Controller
     public function destroy($post)
     {
         $post = Post::where('slug', $post)->first();
-        // Delete the specified Post
-        $post->delete();
+        if($post->user_id == Auth::id()) {
+            // Delete the specified Post
+            $post->delete();
 
-        // Redirect user with a deleted notification
-        return redirect(route('posts.index'))->with('notification', '"' . $post->title .  '" deleted!');
+            // Redirect user with a deleted notification
+            return redirect(route('posts.index'))->with('notification', '"' . $post->title . '" deleted!');
+        }else{
+            return redirect()->back();
+        }
     }
 }

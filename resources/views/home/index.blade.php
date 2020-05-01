@@ -14,8 +14,8 @@
                             <h1 class="title">{{ $post->title }}</h1>
                         </a>
                         <div>
-                            <p><b>Posted:</b> {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
-                            <p><b>Category:</b> {{ \App\Category::find($post->category)->first()->name }}</p>
+                            <p><b>{{__('posts.posted')}}:</b> {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
+                            <p><b>{{__('posts.Category')}}:</b> {{ \App\Category::find($post->category)->first()->name }}</p>
                             <p>{!! nl2br(e($post->content)) !!}</p>
                         </div>
                     </div>
