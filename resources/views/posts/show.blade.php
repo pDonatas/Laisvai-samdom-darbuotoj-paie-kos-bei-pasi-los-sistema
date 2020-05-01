@@ -48,6 +48,7 @@
                                     echo '<option value="'.$i.'">'.$i.' '.trans('ratings.votes').'</option>';
                                 ?>
                             </select>
+                            <input type="text" name="comment" class="form-control" placeholder="{{__('ratings.comment')}}"/>
                             <input type="submit" class="form-control btn btn-primary" value="{{__('ratings.vote')}}"/>
                         </form>
                     @endif
@@ -62,4 +63,5 @@
             </div>
         </div>
     </div>
+    {{ App::make('App\Http\Controllers\RatingController')->show(['post' => $post->id]) }}
 @endsection

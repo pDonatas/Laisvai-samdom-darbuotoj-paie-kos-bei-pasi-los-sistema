@@ -46,5 +46,8 @@ Route::get('/privacypolicy', 'GuestController@privacypolicy')->name('privacypoli
 Route::post("/search", "SearchController@search")->name('search');
 //Balsavimas
 Route::post('vote/{id}', 'RatingController@vote')->name('vote');
+Route::post('sort', 'RatingController@sort')->name('sort');
 //Mėgstamiausi
 Route::get('bookmark/{post}', "BookmarkController@bookmark")->name('bookmark');
+//Vartotojai
+Route::get('user/{id}', 'UserController@show')->name('user');

@@ -1,4 +1,5 @@
 <?php
 return [
-    'search' => 'Search'
+    'search' => 'Search',
+    'submit' => 'Submit'
 ];

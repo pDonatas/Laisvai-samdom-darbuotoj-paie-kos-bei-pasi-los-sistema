@@ -1,7 +1,22 @@
+* {
+    border-radius: 0px !important;
+}
+
 nav {
     margin-bottom: 20px;
 }
 
 .img-icon {
     width: 35px;
+}
+
+.text-right {
+    float: right;
+}
+
+.comment .text {
+    background: #4e555b;
+    color: #fff;
+    padding: 8px;
+    border-radius: 8px;
 }
