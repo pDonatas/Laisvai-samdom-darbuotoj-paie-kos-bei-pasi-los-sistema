@@ -11,6 +11,7 @@
                 <p>{!! nl2br(e($post->content)) !!}</p>
                 @if(\App\Http\Services\TagsService::hasTags($post->id))
                     <div class="text-right">
+                        {{__('posts.price')}}: {{($post->price/100)}} &euro;
                         {{__('tags.tags')}}: {{\App\Http\Services\TagsService::showTags($post->id)}}
                     </div>
                 @endif
@@ -64,6 +65,7 @@
                     @else
                         <a href="{{route('bookmark', $post->id)}}">{{__('favorites.remove')}}</a>
                     @endif
+                    <a href="{{route('order', $post->slug)}}">{{__('orders.order')}}</a>
                 </div>
             </div>
         </div>

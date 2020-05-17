@@ -14,4 +14,5 @@ return [
     'Update' => 'Update',
     'posted' => 'Posted:',
     'Delete' => 'Delete',
+    'price' => 'Price'
 ];

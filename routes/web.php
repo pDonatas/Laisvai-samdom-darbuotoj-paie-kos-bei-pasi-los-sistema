@@ -53,3 +53,7 @@ Route::get('bookmark/{post}', "BookmarkController@bookmark")->name('bookmark');
 Route::get('user/{id}', 'UserController@show')->name('user');
 //Istorija
 Route::get('history', 'HistoryController@index')->name('history');
+//Užsakymai
+Route::get('orders', 'OrderController@index')->name('orders');
+Route::get('order/{id}', 'OrderController@create')->name('order');
+Route::post('order/submit/{id}', 'OrderController@store')->name('orders.store');

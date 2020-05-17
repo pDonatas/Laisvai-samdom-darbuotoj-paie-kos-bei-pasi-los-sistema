@@ -13,5 +13,6 @@ return [
     'Edit' => 'Redaguoti',
     'Update' => 'Atnaujinti',
     'posted' => 'Paskelbta:',
-    'Delete' => 'Ištrinti'
+    'Delete' => 'Ištrinti',
+    'price' => 'Kaina'
 ];
