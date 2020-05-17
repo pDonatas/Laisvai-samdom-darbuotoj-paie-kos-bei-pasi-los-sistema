@@ -1,4 +1,4 @@
-@section('title', 'New Post')
+@section('title', __('posts.Create a new post'))
 @extends('layouts.app')
 
 @section('content')
@@ -21,6 +21,13 @@
             <label class="label">{{__('posts.Content')}}</label>
             <div class="control">
                 <textarea class="form-control" name="content" class="textarea" placeholder="{{__('posts.Content')}}" minlength="5" maxlength="2000" required rows="10">{{ old('content') }}</textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">{{__('posts.price')}}</label>
+            <div class="control">
+                <input class="form-control" name="price" placeholder="{{__('posts.price')}}" type="number">
             </div>
         </div>
 

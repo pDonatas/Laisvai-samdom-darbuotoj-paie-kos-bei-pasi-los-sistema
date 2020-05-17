@@ -25,6 +25,13 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">{{__('posts.price')}}</label>
+                    <div class="control">
+                        <input type="number" class="form-control" name="price" value="{{ $post->price }}" placeholder="{{__('posts.price')}}" required />
+                    </div>
+                </div>
+
+                <div class="field">
                     <label class="label">{{__('posts.Category')}}</label>
                     <div class="control">
                         <div class="select">
