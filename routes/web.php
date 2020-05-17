@@ -57,3 +57,6 @@ Route::get('history', 'HistoryController@index')->name('history');
 Route::get('orders', 'OrderController@index')->name('orders');
 Route::get('order/{id}', 'OrderController@create')->name('order');
 Route::post('order/submit/{id}', 'OrderController@store')->name('orders.store');
+//AdminController
+Route::get('admin', 'AdminController@index')->name('admin');
+Route::get('admin/verify/user/{id}', 'AdminController@verifyUser')->name('admin.verify.user');

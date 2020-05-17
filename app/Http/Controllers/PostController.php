@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verify']);
     }
     /**
      * Display a listing of the resource.

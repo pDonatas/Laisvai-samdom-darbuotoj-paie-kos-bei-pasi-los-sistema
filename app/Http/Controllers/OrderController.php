@@ -15,6 +15,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('verify');
+    }
+
+
     public function index()
     {
         $user = Auth::id();

@@ -65,7 +65,9 @@
                     @else
                         <a href="{{route('bookmark', $post->id)}}">{{__('favorites.remove')}}</a>
                     @endif
-                    <a href="{{route('order', $post->slug)}}">{{__('orders.order')}}</a>
+                    @if($post->user_id != Auth::id())
+                        <a href="{{route('order', $post->slug)}}">{{__('orders.order')}}</a>
+                    @endif
                 </div>
             </div>
         </div>
