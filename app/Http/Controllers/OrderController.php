@@ -25,13 +25,18 @@ class OrderController extends Controller
     {
         $user = Auth::id();
 
-        $orders = DB::raw("SELECT `orders`.`id`, `posts`.`title` FROM `orders` INNER JOIN `posts` ON `orders`.`service`=`posts`.`id` WHERE `orders`.`user` = '$user'");
+        $services =
+            DB::table('orders')
+            ->join('posts', 'orders.service', '=', 'posts.id')
+            ->select('orders.id', 'posts.title')->where('posts.user_id', '=', $user)
+            ->get();
 
-        $services = DB::raw(
-          "SELECT `orders`.`id`, `posts`.`title` FROM `orders`
-                INNER JOIN `posts` ON `orders`.`service`=`posts`.`id`
-                WHERE `posts`.`user_id` = '$user'"
-        );
+        $orders = DB::table('orders')
+            ->join('posts', 'orders.service', '=', 'posts.id')
+            ->select('orders.id', 'posts.title')
+            ->where('orders.user', '=', $user)
+            ->get();
+
         return view('orders.index', [
             'orders' => $orders,
             'services' => $services
