@@ -54,6 +54,16 @@ class OrderController extends Controller
         return view('orders.create', compact('post'));
     }
 
+    public function view($id)
+    {
+        $order = Order::findOrFail($id);
+        $post = Post::findOrFail($order->service);
+        return view('orders.create', [
+            'order' => $order,
+            'post' => $post
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

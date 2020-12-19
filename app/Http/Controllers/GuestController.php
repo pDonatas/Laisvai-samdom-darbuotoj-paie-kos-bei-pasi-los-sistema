@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class GuestController extends Controller
 {
 
     public function home(){
-        $post = new Post();
-        $posts = $post->all();
+        $posts = Post::all();
+        $categories = Category::all();
 
-        return view('home.index', compact('posts'));
+        if (!Session::has('user_locale')) {
+            Session::put('user_locale', 'lt');
+        }
+
+        return view('home.index', [
+            'posts' => $posts,
+            'categories' => $categories
+        ]);
     }
 
     /**

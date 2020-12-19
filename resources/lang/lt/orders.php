@@ -7,5 +7,9 @@ return [
     'orders_tab' => 'Mano užsakymai',
     'services_tab' => 'Mano paslaugų užsakymai',
     'no_orders' => 'Užsakymų nėra',
-    'no_services' => 'Jūsų paslaugų užsakymų nėra'
+    'no_services' => 'Jūsų paslaugų užsakymų nėra',
+    'already_bought' => 'Jau nusipirko',
+    'category' => 'Kategorija',
+    'order_details' => 'Užsakymo informacija',
+    'total' => 'Viso'
 ];

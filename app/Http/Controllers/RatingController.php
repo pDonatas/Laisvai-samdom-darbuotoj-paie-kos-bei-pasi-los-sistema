@@ -56,4 +56,15 @@ class RatingController extends Controller
         Session::put("sort", $data);
         return redirect()->back();
     }
+
+    public function remove($id)
+    {
+        $vote = Rating::findOrFail($id);
+        if (!$vote->user === Auth::id()) {
+            return redirect()->back();
+        }
+
+        $vote->delete();
+        return redirect()->back();
+    }
 }

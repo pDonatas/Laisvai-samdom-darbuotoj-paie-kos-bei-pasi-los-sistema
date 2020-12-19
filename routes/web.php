@@ -45,17 +45,19 @@ Route::get('/privacypolicy', 'GuestController@privacypolicy')->name('privacypoli
 //Paieška
 Route::post("/search", "SearchController@search")->name('search');
 //Balsavimas
+Route::get('vote/remove/{id}', 'RatingController@remove')->name('vote.remove');
 Route::post('vote/{id}', 'RatingController@vote')->name('vote');
 Route::post('sort', 'RatingController@sort')->name('sort');
 //Mėgstamiausi
 Route::get('bookmark/{post}', "BookmarkController@bookmark")->name('bookmark');
 //Vartotojai
-Route::get('user/{id}', 'UserController@show')->name('user');
+Route::resource('user', UserController::class);
 //Istorija
 Route::get('history', 'HistoryController@index')->name('history');
 //Užsakymai
 Route::get('orders', 'OrderController@index')->name('orders');
 Route::get('order/{id}', 'OrderController@create')->name('order');
+Route::get('order/view/{id}', 'OrderController@view')->name('orders.view');
 Route::post('order/submit/{id}', 'OrderController@store')->name('orders.store');
 //AdminController
 Route::get('admin', 'AdminController@index')->name('admin');

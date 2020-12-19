@@ -3,12 +3,14 @@
 
 namespace App\Http;
 
+use App\Category;
 use App\Http\Services\RatingsService;
 use Illuminate\Support\Facades\DB;
 
 class Helpers
 {
-    public function search($arguments){
+    public function search($arguments)
+    {
         $query = "";
         $arg = explode(',', $arguments);
         foreach ($arg as $ar) {
@@ -18,7 +20,8 @@ class Helpers
         return DB::select(DB::raw($query));
     }
 
-    public function getRating($id){
+    public static function getRating($id)
+    {
         return RatingsService::overall($id);
     }
 }
