@@ -57,6 +57,8 @@
                             <div class="price">{{$post->price}} &euro;</div>
                             @if($post->user_id != Auth::id())
                                 <a href="{{route('order', $post->slug)}}" class="default-btn"><i class='bx bx-paper-plane icon-arrow before'></i><span class="label">{{__('orders.order')}}</span><i class="bx bx-paper-plane icon-arrow after"></i></a>
+                            @else
+                                <a href="{{route('posts.edit', $post->slug)}}" class="default-btn"><i class='bx bx-paper-plane icon-arrow before'></i><span class="label">{{__('posts.Edit')}}</span><i class="bx bx-paper-plane icon-arrow after"></i></a>
                             @endif
                         </div>
                     </div>

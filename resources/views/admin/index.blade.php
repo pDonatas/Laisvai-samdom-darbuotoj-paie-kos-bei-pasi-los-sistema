@@ -1,8 +1,18 @@
 @section('title', __('orders.orders_tab'))
-@extends('layouts.app')
+@extends('layouts.full')
 
 @section('content')
 
+    <div class="page-title-area item-bg1 jarallax" data-jarallax='{"speed": 0.3}'>
+        <div class="container">
+            <div class="page-title-content">
+                <ul>
+                    <li><a href="{{route('admin')}}">{{__('page.admin')}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="myAccount-content">
     <div class="card ">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs pull-right"  id="myTab" role="tablist">
@@ -63,6 +73,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection

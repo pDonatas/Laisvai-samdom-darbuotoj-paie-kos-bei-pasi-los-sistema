@@ -62,3 +62,7 @@ Route::post('order/submit/{id}', 'OrderController@store')->name('orders.store');
 //AdminController
 Route::get('admin', 'AdminController@index')->name('admin');
 Route::get('admin/verify/user/{id}', 'AdminController@verifyUser')->name('admin.verify.user');
+Route::get('logout', function () {
+   \Illuminate\Support\Facades\Auth::logout();
+   return redirect()->back();
+});

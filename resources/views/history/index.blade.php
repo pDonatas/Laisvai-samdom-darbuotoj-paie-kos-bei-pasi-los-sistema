@@ -1,7 +1,19 @@
 @section('title', __('user.history'))
-@extends('layouts.app')
+@extends('layouts.full')
 
 @section('content')
+    <div class="page-title-area item-bg4 jarallax" data-jarallax='{"speed": 0.3}'>
+        <div class="container">
+            <div class="page-title-content">
+                <ul>
+                    <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
+                    <li>{{__('user.history')}}</li>
+                </ul>
+                <h2>{{__('user.history')}}</h2>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">{{ __('user.history') }}</div>
         <div class="card-body">

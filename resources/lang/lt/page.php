@@ -17,5 +17,6 @@ return [
     'courses' => 'Skelbimai',
     'all' => 'Visi',
     'home' => 'Namai',
-    'total' => 'Viso'
+    'total' => 'Viso',
+    'admin' => 'Administravimas'
 ];

@@ -21,6 +21,7 @@
             <div class="myAccount-navigation">
                 <ul>
                     <li><a href="{{route('user.show', Auth::id())}}"><i class="bx bx-edit"></i> {{__('user.my_account')}}</a></li>
+                    <li><a href="{{route('user.edit', Auth::id())}}"><i class="bx bx-edit"></i> {{__('user.edit')}}</a></li>
                     <li><a href="{{route('orders')}}" class="active"><i class="bx bx-cart"></i> {{__('orders.orders_tab')}}</a></li>
                 </ul>
             </div>

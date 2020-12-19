@@ -1,11 +1,22 @@
 @section('title', __('posts.Create a new post'))
-@extends('layouts.app')
+@extends('layouts.full')
 
 @section('content')
-
+    <div class="page-title-area item-bg1 jarallax" data-jarallax='{"speed": 0.3}'>
+        <div class="container">
+            <div class="page-title-content">
+                <ul>
+                    <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
+                    <li>{{__('posts.Create a new post')}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="courses-details-area pt-100 pb-70">
+        <div class="container">
     <h1 class="title">{{__('posts.Create a new post')}}</h1>
 
-    <form method="post" action="{{ route('posts.store') }}">
+    <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
 
         @csrf
         @include('partials.errors')
@@ -51,6 +62,13 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="label">{{__('posts.image')}}</label>
+            <div>
+                <input class="form-control" type="file" name="img" required/>
+            </div>
+        </div>
+
         <div class="field">
             <div class="control">
                 <button type="submit" class="btn btn-primary">{{__('posts.Publish')}}</button>
@@ -58,5 +76,7 @@
         </div>
 
     </form>
+        </div>
+    </section>
 
 @endsection

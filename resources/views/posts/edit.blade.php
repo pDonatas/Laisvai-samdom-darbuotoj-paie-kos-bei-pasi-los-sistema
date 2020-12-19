@@ -1,11 +1,23 @@
-@section('title', 'Edit: '.$post->title)
-@extends('layouts.app')
+@section('title',  __('posts.Edit').' '.$post->title)
+@extends('layouts.full')
 
 @section('content')
+    <div class="page-title-area item-bg1 jarallax" data-jarallax='{"speed": 0.3}'>
+        <div class="container">
+            <div class="page-title-content">
+                <ul>
+                    <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
+                    <li>{{__('posts.Edit').' '.$post->title}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="courses-details-area pt-100 pb-70">
+        <div class="container">
     <div class="card">
         <div class="card-header">{{__('posts.Edit')}}: {{ $post->title }}</div>
         <div class="card-body">
-            <form method="post" action="{{ route('posts.update', $post->slug) }}">
+            <form method="post" action="{{ route('posts.update', $post->slug) }}" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
                 @include('partials.errors')
@@ -52,6 +64,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="label">{{__('posts.image')}}</label>
+                    <div>
+                        <input class="form-control" type="file" name="img"/>
+                    </div>
+                </div>
+
                 <div class="field">
                     <div class="control">
                         <button type="submit" class="btn btn-primary">{{__('posts.Update')}}</button>
@@ -61,4 +80,6 @@
             </form>
         </div>
     </div>
+        </div>
+    </section>
 @endsection

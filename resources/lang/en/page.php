@@ -16,5 +16,6 @@ return [
     'courses' => 'Services',
     'all' => 'All',
     'home' => 'Home',
-    'total' => 'Total'
+    'total' => 'Total',
+    'admin' => 'Admin panel'
 ];

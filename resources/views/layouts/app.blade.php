@@ -83,20 +83,17 @@
                                 <a class="nav-link" href="{{route('home')}}">{{__('nav.home')}} <span class="sr-only">(current)</span></a>
                             </li>
                             <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#" class="nav-link">{{Auth()->user()->name}} <i class='bx bx-chevron-down'></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="{{route('user.show', Auth::id())}}">{{__('user.my_account')}}</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route("history")}}">{{__('user.history')}}</a></li>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 2)
+                                            <li class="nav-item"><a class="nav-link" href="{{route("admin")}}">Administravimas</a></li>
+                                        @endif
+                                        <li class="nav-item"><a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a></li>
+                                    </ul>
+                                </li>
                                 @auth
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{Auth()->user()->name}}
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{route('password-change')}}">{{__('user.change_pass')}}</a>
-                                            <a class="dropdown-item" href="{{route("history")}}">{{__('user.history')}}</a>
-                                            @if(\Illuminate\Support\Facades\Auth::user()->type == 2)
-                                                <a class="dropdown-item" href="{{route("admin")}}">Administravimas</a>
-                                            @endif
-                                            <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a>
-                                        </div>
-                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('posts.create')}}">{{__('nav.post')}}</a>
                                     </li>
@@ -156,20 +153,17 @@
                                 <a class="nav-link" href="{{route('home')}}">{{__('nav.home')}} <span class="sr-only">(current)</span></a>
                             </li>
                             <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#" class="nav-link">{{Auth()->user()->name}} <i class='bx bx-chevron-down'></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="{{route('user.show', Auth::id())}}">{{__('user.my_account')}}</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route("history")}}">{{__('user.history')}}</a></li>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->type == 2)
+                                            <li class="nav-item"><a class="nav-link" href="{{route("admin")}}">{{__('page.admin')}}</a></li>
+                                        @endif
+                                        <li class="nav-item"><a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a></li>
+                                    </ul>
+                                </li>
                                 @auth
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{Auth()->user()->name}}
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{route('password-change')}}">{{__('user.change_pass')}}</a>
-                                            <a class="dropdown-item" href="{{route("history")}}">{{__('user.history')}}</a>
-                                            @if(\Illuminate\Support\Facades\Auth::user()->type == 2)
-                                                <a class="dropdown-item" href="{{route("admin")}}">Administravimas</a>
-                                            @endif
-                                            <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a>
-                                        </div>
-                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('posts.create')}}">{{__('nav.post')}}</a>
                                     </li>

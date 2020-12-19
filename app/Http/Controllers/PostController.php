@@ -56,8 +56,15 @@ class PostController extends Controller
             'title' => 'required|string|unique:posts|min:5|max:100',
             'content' => 'required|string|min:5|max:2000',
             'category' => 'required|string|max:30',
-            'price' => 'required|numeric|max:10000'
+            'price' => 'required|numeric|max:10000',
+            'img' => 'required|file|mimes:jpeg,bmp,png,gif,svg'
         ]);
+
+        $file = $request->file('img');
+        $destinationPath = 'assets/img/posts';
+        $file->move($destinationPath,$file->getClientOriginalName());
+        $img = '/'.$destinationPath.'/'.$file->getClientOriginalName();
+        $validated['img'] = $img;
 
         // Create slug from title
         $validated['slug'] = Str::slug($validated['title'], '-');
@@ -129,6 +136,19 @@ class PostController extends Controller
                 'category' => 'required|string|max:30',
                 'price' => 'required|numeric|max:10000'
             ]);
+
+            if ($request->file('img') !== null) {
+                $request->validate([
+                    'img' => 'file|mimes:jpeg,bmp,png,gif,svg'
+                ]);
+                $file = $request->file('img');
+                $destinationPath = 'assets/img/posts';
+                $file->move($destinationPath,$file->getClientOriginalName());
+                $img = '/'.$destinationPath.'/'.$file->getClientOriginalName();
+                $post->update([
+                    'img' => $img
+                ]);
+            }
 
             // Create slug from title
             $validated['slug'] = Str::slug($validated['title'], '-');

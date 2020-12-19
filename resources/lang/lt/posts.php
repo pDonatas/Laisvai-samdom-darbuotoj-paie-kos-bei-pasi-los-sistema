@@ -14,5 +14,6 @@ return [
     'Update' => 'Atnaujinti',
     'posted' => 'Paskelbta:',
     'Delete' => 'Ištrinti',
-    'price' => 'Kaina'
+    'price' => 'Kaina',
+    'image' => 'Nuotrauka'
 ];
