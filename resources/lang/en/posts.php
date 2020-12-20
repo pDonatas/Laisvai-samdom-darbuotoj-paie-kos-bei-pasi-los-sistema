@@ -15,5 +15,6 @@ return [
     'posted' => 'Posted:',
     'Delete' => 'Delete',
     'price' => 'Price',
-    'image' => 'Image'
+    'image' => 'Image',
+    'category' => 'Category'
 ];

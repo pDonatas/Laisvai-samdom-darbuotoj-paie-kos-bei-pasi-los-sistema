@@ -83,6 +83,7 @@
                                 <a class="nav-link" href="{{route('home')}}">{{__('nav.home')}} <span class="sr-only">(current)</span></a>
                             </li>
                             <ul class="navbar-nav">
+                                @auth
                                 <li class="nav-item"><a href="#" class="nav-link">{{Auth()->user()->name}} <i class='bx bx-chevron-down'></i></a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="{{route('user.show', Auth::id())}}">{{__('user.my_account')}}</a></li>
@@ -93,7 +94,6 @@
                                         <li class="nav-item"><a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a></li>
                                     </ul>
                                 </li>
-                                @auth
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('posts.create')}}">{{__('nav.post')}}</a>
                                     </li>
@@ -153,6 +153,7 @@
                                 <a class="nav-link" href="{{route('home')}}">{{__('nav.home')}} <span class="sr-only">(current)</span></a>
                             </li>
                             <ul class="navbar-nav">
+                                @auth
                                 <li class="nav-item"><a href="#" class="nav-link">{{Auth()->user()->name}} <i class='bx bx-chevron-down'></i></a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item"><a class="nav-link" href="{{route('user.show', Auth::id())}}">{{__('user.my_account')}}</a></li>
@@ -163,7 +164,6 @@
                                         <li class="nav-item"><a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{__('user.logout')}}</a></li>
                                     </ul>
                                 </li>
-                                @auth
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{route('posts.create')}}">{{__('nav.post')}}</a>
                                     </li>
@@ -227,7 +227,8 @@
             </div>
             <div class="search-overlay-form">
                 <form method="post" action="/search">
-                    <input type="text" class="input-search" placeholder="{{__('page.search')}}">
+                    @csrf
+                    <input type="text" class="input-search" name="search" placeholder="{{__('page.search')}}">
                     <button type="submit"><i class='bx bx-search-alt'></i></button>
                 </form>
             </div>

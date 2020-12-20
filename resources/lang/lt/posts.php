@@ -15,5 +15,6 @@ return [
     'posted' => 'Paskelbta:',
     'Delete' => 'Ištrinti',
     'price' => 'Kaina',
-    'image' => 'Nuotrauka'
+    'image' => 'Nuotrauka',
+    'category' => 'Kategorija'
 ];
