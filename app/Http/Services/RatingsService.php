@@ -38,7 +38,7 @@ class RatingsService
         else return false;
     }
 
-    public function RemoveAll($id)
+    public function removeAll($id)
     {
         Rating::where('post', $id)->delete();
     }
