@@ -26,7 +26,7 @@ class BookmarkController extends BaseController
         } else {
             $bookmark = $this->bookmarkFactory->create([
                 'post' => $post,
-                'user_id' => Auth::user()
+                'user_id' => Auth::id()
             ], Bookmark::class);
 
             $bookmark->save();

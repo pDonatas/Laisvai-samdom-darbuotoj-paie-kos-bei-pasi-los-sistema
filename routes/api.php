@@ -44,7 +44,7 @@ Route::middleware('jwt')->group(function () {
     //Paieška
     Route::post("/search", [SearchController::class, 'search'])->name('search');
     //Balsavimas
-    Route::get('vote/remove/{id}', [RatingController::class, 'remove'])->name('vote.remove');
+    Route::delete('vote/remove/{id}', [RatingController::class, 'remove'])->name('vote.remove');
     Route::post('vote/{id}', [RatingController::class, 'vote'])->name('vote');
     Route::post('sort', [RatingController::class, 'sort'])->name('sort');
     //Mėgstamiausi
@@ -55,9 +55,8 @@ Route::middleware('jwt')->group(function () {
     Route::get('history', [HistoryController::class, 'index'])->name('history');
     //Užsakymai
     Route::get('orders', [OrderController::class, 'index'])->name('orders');
-    Route::get('order/{id}', [OrderController::class, 'create'])->name('order');
     Route::get('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
-    Route::post('order/submit/{id}', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('order/submit/{slug}', [OrderController::class, 'store'])->name('orders.store');
     //AdminController
     Route::get('admin', [AdminController::class, 'index'])->name('admin');
     Route::get('admin/verify/user/{id}', [AdminController::class, 'verifyUser'])->name('admin.verify.user');

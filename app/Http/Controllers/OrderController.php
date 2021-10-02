@@ -34,7 +34,7 @@ class OrderController extends Controller
         $orders = DB::table('orders')
             ->join('posts', 'orders.service', '=', 'posts.id')
             ->select('orders.id', 'posts.title')
-            ->where('orders.user', '=', $user)
+            ->where('orders.user_id', '=', $user)
             ->get();
 
         return view('orders.index', [
@@ -74,7 +74,7 @@ class OrderController extends Controller
     {
         $post = Post::where('slug', $data)->first();
         $order = new Order();
-        $order->user = Auth::id();
+        $order->user_id = Auth::id();
         $order->service = $post->id;
         $order->requirement = $request->input('requirements');
         $order->save();
