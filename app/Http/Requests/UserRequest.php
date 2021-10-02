@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'password' => 'sometimes|string',
             'new_password' => 'sometimes|string',
             'confirm_password' => 'sometimes|string',
@@ -31,5 +31,11 @@ class UserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email'
         ];
+
+        if ($this->route()->getActionMethod() == 'register') {
+            $rules['password'] = 'required|string';
+        }
+
+        return $rules;
     }
 }

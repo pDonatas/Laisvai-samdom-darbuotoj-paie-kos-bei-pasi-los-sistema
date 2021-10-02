@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -51,5 +53,20 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    public function register()
+    {
+        $this->renderable(function (InvalidTokenException $e) {
+            return new JsonResponse([
+                'error' => $e->getMessage()
+            ], Response::HTTP_UNAUTHORIZED);
+        });
+
+        $this->renderable(function (InvalidUserException|InvalidAPIResponseException $e) {
+            return new JsonResponse([
+                'error' => $e->getMessage()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        });
     }
 }
