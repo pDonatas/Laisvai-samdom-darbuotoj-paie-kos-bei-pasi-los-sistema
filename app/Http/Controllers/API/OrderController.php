@@ -30,10 +30,12 @@ class OrderController extends BaseController
     public function store(Request $request, $data): JsonResponse
     {
         $post = Post::where('slug', $data)->first();
-
+        if (!$post) {
+            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
         $order = $this->factory->create([
-            'user' => Auth::user(),
-            'service' => $post,
+            'user_id' => Auth::id(),
+            'service' => $post->id,
             'requirement' => $request->input('requirements')
         ], Order::class);
 
@@ -61,6 +63,14 @@ class OrderController extends BaseController
         $order->delete();
 
         return $this->return();
+    }
+
+    public function view($id): JsonResponse
+    {
+        $order = Order::findOrFail($id);
+        $post = Post::findOrFail($order->service);
+
+        return $this->return(compact('post', 'order'));
     }
 }
 

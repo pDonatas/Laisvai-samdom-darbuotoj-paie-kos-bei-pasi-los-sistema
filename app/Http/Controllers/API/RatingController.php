@@ -24,15 +24,19 @@ class RatingController extends BaseController
         $this->ratingFactory = $ratingFactory;
     }
 
-    public function vote(RatingRequest $request, Post $post): JsonResponse
+    public function vote(RatingRequest $request, $post): JsonResponse
     {
+        $post = Post::find($post);
+        if (!$post) {
+            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
         if ($this->ratingsService->exists($post)) {
             if (!$this->ratingsService->voted(Auth::id(), $post)) {
                 $rating = $this->ratingFactory->create([
                     'vote' => $request->get('vote'),
                     'user' => Auth::id(),
                     'comment' => $request->get('comment'),
-                    'post' => $post
+                    'post' => $post->id
                 ], Rating::class);
 
                 $rating->save();
