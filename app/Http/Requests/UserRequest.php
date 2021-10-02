@@ -26,14 +26,15 @@ class UserRequest extends FormRequest
         $rules = [
             'password' => 'sometimes|string',
             'new_password' => 'sometimes|string',
-            'confirm_password' => 'sometimes|string',
+            'confirm_password' => 'sometimes|string|same:new_password',
             'photo' => 'sometimes|file|mimes:jpeg,bmp,png,gif,svg',
             'name' => 'required|string',
             'email' => 'required|email'
         ];
 
-        if ($this->route()->getActionMethod() == 'register') {
+        if ($this->route()->getActionMethod() == 'register' || $this->route()->getActionMethod() == 'store') {
             $rules['password'] = 'required|string';
+            $rules['confirm_password'] = 'required|same:password';
         }
 
         return $rules;

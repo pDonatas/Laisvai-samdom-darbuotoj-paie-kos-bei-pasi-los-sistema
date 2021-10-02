@@ -9,6 +9,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Services\Auth\TokenService;
 use App\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,5 +65,17 @@ class AuthController extends BaseController
         return $this->return([
             'success' => 'User created successfully'
         ]);
+    }
+
+    public function logout(): JsonResponse
+    {
+        $user = Auth::user();
+        $user->update([
+            'token' => null
+        ]);
+
+        Auth::logout();
+
+        return $this->return(['success' => 'User logged out successfully']);
     }
 }

@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\InvalidUserException;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends BaseController
 {
+    public function index(): JsonResponse
+    {
+        return $this->return(User::all()->toArray());
+    }
+
     public function show(User $user): JsonResponse
     {
         return $this->return(compact('user'));
@@ -17,7 +24,11 @@ class UserController extends BaseController
 
     public function update(UserRequest $request, User $user): JsonResponse
     {
-        if ($request->get('password') !== null && $request->get('new_password') !== null && $request->get('confirm_password') !== null) {
+        if (Auth::user()->type == 0 && $user !== Auth::user()) {
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
+        if ($request->request->get('password') !== null && $request->request->get('new_password') !== null && $request->request->get('confirm_password') !== null) {
             if (!Hash::check($request->get('password'), $user->password)) {
                 return $this->return([
                     'error' =>  __('user.password_incorrect')
@@ -46,17 +57,49 @@ class UserController extends BaseController
 
 
         $user->update([
-            'name' => $request->get('name'),
-            'email' => $request->get('email')
+            'name' => $request->request->get('name'),
+            'email' => $request->request->get('email')
         ]);
 
-        return $this->return(responseCode: Response::HTTP_ACCEPTED);
+        return $this->return($user->toArray(), responseCode: Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(User $user): JsonResponse
+    public function destroy($id): JsonResponse
     {
+        if (Auth::user()->type == 0) {
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return $this->return(['errors' => 'User does not exist'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $user->delete();
 
         return $this->return();
+    }
+
+    public function store(UserRequest $request): JsonResponse
+    {
+        if (Auth::user()->type == 0) {
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
+        $user = User::where('email', $request->get('email'))->first();
+
+        if ($user) {
+            throw new InvalidUserException("This user already exists");
+        }
+
+        $user = User::create($request->toArray());
+        $user->update([
+            'password' => Hash::make($request->get('password'))
+        ]);
+
+        return $this->return([
+            'success' => 'User created successfully'
+        ]);
     }
 }

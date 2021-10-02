@@ -9,7 +9,6 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\RatingController;
 use App\Http\Controllers\API\SearchController;
-use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,9 +37,10 @@ Route::middleware('jwt')->group(function () {
     Route::delete('/posts/destroy/{slug}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::patch('/posts/update/{slug}', [PostController::class, 'update'])->name('posts.update');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::post('/createcategory', [CategoryController::class, 'store'])->name('category.store');
-    Route::put('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/categories/show/{id}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::post('/categories/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::put('/categories/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     //Paieška
     Route::post("/search", [SearchController::class, 'search'])->name('search');
     //Balsavimas
@@ -50,7 +50,7 @@ Route::middleware('jwt')->group(function () {
     //Mėgstamiausi
     Route::get('bookmark/{post}', [BookmarkController::class, 'bookmark'])->name('bookmark');
     //Vartotojai
-    Route::resource('user', UserController::class);
+    Route::resource('user', API\UserController::class);
     //Istorija
     Route::get('history', [HistoryController::class, 'index'])->name('history');
     //Užsakymai
@@ -59,10 +59,7 @@ Route::middleware('jwt')->group(function () {
     Route::get('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
     Route::post('order/submit/{id}', [OrderController::class, 'store'])->name('orders.store');
     //AdminController
-    Route::get('admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('admin/users', [AdminController::class, 'index'])->name('admin');
     Route::get('admin/verify/user/{id}', [AdminController::class, 'verifyUser'])->name('admin.verify.user');
-    Route::get('logout', function () {
-        \Illuminate\Support\Facades\Auth::logout();
-        return redirect()->back();
-    });
+    Route::get('logout', [AuthController::class, 'logout']);
 });

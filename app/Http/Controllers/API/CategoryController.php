@@ -11,22 +11,26 @@ class CategoryController extends BaseController
 {
     public function index(): JsonResponse
     {
-        $categories = Category::all();
+        $categories = Category::all()->toArray();
 
         return $this->return($categories);
     }
 
     public function store(CategoryRequest $request): JsonResponse
     {
-        Category::create($request);
+        Category::create($request->toArray());
 
         return $this->return(['success' => 'You have successfully created a Category!'], Response::HTTP_CREATED);
     }
 
-    public function update(CategoryRequest $request, Category $category): JsonResponse
+    public function update(CategoryRequest $request, $id): JsonResponse
     {
-        $category = Category::find($category);
-        $category->update($request);
+        $category = Category::find($id);
+        if (!$category) {
+            return $this->return(['error' => 'This category does not exist!'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $category->update($request->toArray());
 
         return $this->return(['success' => 'You have successfully edited a Category!'], Response::HTTP_ACCEPTED);
     }
@@ -34,8 +38,22 @@ class CategoryController extends BaseController
     public function destroy($category): JsonResponse
     {
         $category = Category::find($category);
+        if (!$category) {
+            return $this->return(['errors' => 'This category does not exist'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $category->delete();
 
         return $this->return(['success' => 'You have successfully removed a Category!']);
+    }
+
+    public function show($category): JsonResponse
+    {
+        $category = Category::find($category);
+        if (!$category) {
+            return $this->return(['errors' => 'This category does not exist'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $this->return($category->toArray());
     }
 }
