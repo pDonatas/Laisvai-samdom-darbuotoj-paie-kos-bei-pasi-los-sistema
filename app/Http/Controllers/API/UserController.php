@@ -25,20 +25,22 @@ class UserController extends BaseController
     public function update(UserRequest $request, User $user): JsonResponse
     {
         if (Auth::user()->type == 0 && $user !== Auth::user()) {
-            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_FORBIDDEN);
         }
+
+        $user->update($request->toArray());
 
         if ($request->request->get('password') !== null && $request->request->get('new_password') !== null && $request->request->get('confirm_password') !== null) {
             if (!Hash::check($request->get('password'), $user->password)) {
                 return $this->return([
                     'error' =>  __('user.password_incorrect')
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             if ($request->get('new_password') !== $request->get('confirm_password')) {
                 return $this->return([
                     'error' =>  __('user.passwords_not_match')
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                ], Response::HTTP_BAD_REQUEST);
             }
 
             $user->update([
@@ -55,30 +57,24 @@ class UserController extends BaseController
             ]);
         }
 
-
-        $user->update([
-            'name' => $request->request->get('name'),
-            'email' => $request->request->get('email')
-        ]);
-
         return $this->return($user->toArray(), responseCode: Response::HTTP_ACCEPTED);
     }
 
     public function destroy($id): JsonResponse
     {
         if (Auth::user()->type == 0) {
-            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_FORBIDDEN);
         }
 
         $user = User::find($id);
 
         if (!$user) {
-            return $this->return(['errors' => 'User does not exist'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->return(['errors' => 'User does not exist'], Response::HTTP_BAD_REQUEST);
         }
 
         $user->delete();
 
-        return $this->return();
+        return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 
     public function store(UserRequest $request): JsonResponse
@@ -98,8 +94,6 @@ class UserController extends BaseController
             'password' => Hash::make($request->get('password'))
         ]);
 
-        return $this->return([
-            'success' => 'User created successfully'
-        ]);
+        return $this->return(compact('user'), Response::HTTP_CREATED);
     }
 }

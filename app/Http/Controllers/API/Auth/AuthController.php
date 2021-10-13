@@ -28,6 +28,10 @@ class AuthController extends BaseController
     {
         $user = User::where('email', $request->get('email'))->first();
 
+        if (!$user) {
+            return $this->return(['error' => 'Either username and/or password is not correct'], Response::HTTP_NOT_FOUND);
+        }
+
         if (Hash::check($request->get('password'), $user->password)) {
             $token = $this->tokenService->encryptToken(json_encode(['expire' => strtotime('+2 days')]));
 
@@ -46,7 +50,7 @@ class AuthController extends BaseController
             'error' => [
                 'username' => 'Email or password is not correct'
             ]
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     public function register(UserRequest $request): JsonResponse
@@ -62,9 +66,10 @@ class AuthController extends BaseController
             'password' => Hash::make($request->get('password'))
         ]);
 
-        return $this->return([
-            'success' => 'User created successfully'
-        ]);
+        return $this->return(
+            compact('user'),
+            Response::HTTP_CREATED
+        );
     }
 
     public function logout(): JsonResponse

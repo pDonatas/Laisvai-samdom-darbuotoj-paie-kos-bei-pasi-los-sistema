@@ -28,7 +28,7 @@ class RatingController extends BaseController
     {
         $post = Post::find($post);
         if (!$post) {
-            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_NOT_FOUND);
         }
         if ($this->ratingsService->exists($post)) {
             if (!$this->ratingsService->voted(Auth::id(), $post)) {
@@ -40,10 +40,12 @@ class RatingController extends BaseController
                 ], Rating::class);
 
                 $rating->save();
+
+                return $this->return(compact('rating'), responseCode: Response::HTTP_CREATED);
             }
         }
 
-        return $this->return();
+        return $this->return(responseCode: Response::HTTP_NOT_FOUND);
     }
 
     public function show($post): JsonResponse
@@ -77,11 +79,11 @@ class RatingController extends BaseController
         if (!$vote->user === Auth::id()) {
             return $this->return([
                 'error' => 'You can not remove this vote'
-            ], Response::HTTP_NOT_ACCEPTABLE);
+            ], Response::HTTP_FORBIDDEN);
         }
 
         $vote->delete();
 
-        return $this->return();
+        return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 }

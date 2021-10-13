@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
@@ -13,8 +15,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function service(): HasOne
+    public function service(): BelongsToMany
     {
-        return $this->hasOne(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 }

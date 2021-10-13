@@ -12,7 +12,7 @@ class AdminController extends BaseController
     public function index(): JsonResponse
     {
         if (Auth::user()->type == 0) {
-            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_FORBIDDEN);
         }
 
         $verified = User::where('type', '>', 0)->get();
@@ -27,13 +27,13 @@ class AdminController extends BaseController
     public function verifyUser(int $id): JsonResponse
     {
         if (Auth::user()->type == 0) {
-            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_NOT_ACCEPTABLE);
+            return $this->return(['errors' => 'You do not have access to this route'], Response::HTTP_FORBIDDEN);
         }
 
         $user = User::find($id);
 
         if (!$user) {
-            return $this->return(['errors' => 'User does not exist'], Response::HTTP_NOT_ACCEPTABLE);
+            return $this->return(['errors' => 'User does not exist'], Response::HTTP_NOT_FOUND);
         }
 
         if ($user->type > 0) {

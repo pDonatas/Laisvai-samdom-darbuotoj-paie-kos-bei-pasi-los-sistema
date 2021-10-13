@@ -53,7 +53,7 @@ class PostController extends BaseController
             $this->tagsService->saveTags($post->id, $request->input('tags'));
         }
         // Redirect the user to the created post with a success notification
-        return $this->return(['success' => 'Post created!'], Response::HTTP_CREATED);
+        return $this->return(compact('post'), Response::HTTP_CREATED);
     }
 
     public function show(string $slug): JsonResponse
@@ -61,7 +61,7 @@ class PostController extends BaseController
         $post = Post::where('slug', $slug)->first();
 
         if (!$post) {
-            throw new InvalidAPIResponseException("This post does not exist");
+            return $this->return(responseCode: Response::HTTP_NOT_FOUND);
         }
 
         $rate = RatingsService::overall($post->id);
@@ -72,6 +72,11 @@ class PostController extends BaseController
     public function update(PostRequest $request, $post): JsonResponse
     {
         $post = Post::where('slug', $post)->first();
+
+        if (!$post) {
+            return $this->return(responseCode: Response::HTTP_NOT_FOUND);
+        }
+
         $data = $request->toArray();
         if ($post->user_id == Auth::id()) {
             if ($request->file('img') !== null) {
@@ -94,23 +99,23 @@ class PostController extends BaseController
             }
 
             // Redirect the user to the created post woth an updated notification
-            return $this->return(['success' => 'Post updated successfully'], Response::HTTP_ACCEPTED);
+            return $this->return(compact('post'), Response::HTTP_ACCEPTED);
         }
 
         return $this->return([
             'error' => 'You can not edit this post'
-        ], Response::HTTP_NOT_ACCEPTABLE);
+        ], Response::HTTP_FORBIDDEN);
     }
 
     public function destroy($post): JsonResponse
     {
         $post = Post::where('slug', $post)->first();
         if (!$post) {
-            throw new InvalidAPIResponseException('This post does not exist');
+            return $this->return(responseCode: Response::HTTP_NOT_FOUND);
         }
 
         if ($post->user_id != Auth::id()) {
-            throw new InvalidAPIResponseException('You can not edit this post');
+            return $this->return(["error" => "You can remove only your created posts"], responseCode: Response::HTTP_FORBIDDEN);
         }
 
         // Delete the specified Post
@@ -120,6 +125,6 @@ class PostController extends BaseController
 
         Bookmark::where('post', $post->id)->delete();
 
-        return $this->return();
+        return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 }

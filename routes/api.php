@@ -31,20 +31,20 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('jwt')->group(function () {
-    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
-    Route::get('/posts/index', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts/show/{slug}', [PostController::class, 'show'])->name('posts.show');
-    Route::delete('/posts/destroy/{slug}', [PostController::class, 'destroy'])->name('posts.destroy');
-    Route::patch('/posts/update/{slug}', [PostController::class, 'update'])->name('posts.update');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
+    Route::delete('/posts/{slug}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::patch('/posts/{slug}', [PostController::class, 'update'])->name('posts.update');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('/categories/show/{id}', [CategoryController::class, 'show'])->name('categories.show');
-    Route::post('/categories/store', [CategoryController::class, 'store'])->name('category.store');
-    Route::put('/categories/update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/categories/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     //Paieška
     Route::post("/search", [SearchController::class, 'search'])->name('search');
     //Balsavimas
-    Route::delete('vote/remove/{id}', [RatingController::class, 'remove'])->name('vote.remove');
+    Route::delete('vote/{id}', [RatingController::class, 'remove'])->name('vote.remove');
     Route::post('vote/{id}', [RatingController::class, 'vote'])->name('vote');
     Route::post('sort', [RatingController::class, 'sort'])->name('sort');
     //Mėgstamiausi
@@ -55,8 +55,8 @@ Route::middleware('jwt')->group(function () {
     Route::get('history', [HistoryController::class, 'index'])->name('history');
     //Užsakymai
     Route::get('orders', [OrderController::class, 'index'])->name('orders');
-    Route::get('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
-    Route::post('order/submit/{slug}', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('orders/{id}', [OrderController::class, 'view'])->name('orders.view');
+    Route::post('orders/{slug}', [OrderController::class, 'store'])->name('orders.store');
     //AdminController
     Route::get('admin/users', [AdminController::class, 'index'])->name('admin');
     Route::get('admin/verify/user/{id}', [AdminController::class, 'verifyUser'])->name('admin.verify.user');

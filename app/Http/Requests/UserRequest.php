@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRequest extends FormRequest
 {
@@ -35,6 +37,7 @@ class UserRequest extends FormRequest
         if ($this->route()->getActionMethod() == 'register' || $this->route()->getActionMethod() == 'store') {
             $rules['password'] = 'required|string';
             $rules['confirm_password'] = 'required|same:password';
+            $rules['email'] = 'required|email|unique:users';
         }
 
         return $rules;

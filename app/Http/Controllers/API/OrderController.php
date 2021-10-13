@@ -22,26 +22,27 @@ class OrderController extends BaseController
 
     public function index(): JsonResponse
     {
-        $orders = Auth::user()->orders()->get();
+        $orders = Auth::user()->orders()->with('service')->get();
 
         return $this->return(compact('orders'));
     }
 
-    public function store(Request $request, $data): JsonResponse
+    public function store(OrderRequest $request, $data): JsonResponse
     {
         $post = Post::where('slug', $data)->first();
         if (!$post) {
-            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->return(['error' => 'This post does not exist!'], Response::HTTP_BAD_REQUEST);
         }
         $order = $this->factory->create([
             'user_id' => Auth::id(),
-            'service' => $post->id,
             'requirement' => $request->input('requirements')
         ], Order::class);
 
         $order->save();
 
-        return $this->return(responseCode: Response::HTTP_CREATED);
+        $order->service()->attach($post);
+
+        return $this->return(compact('order'), responseCode: Response::HTTP_CREATED);
     }
 
     public function show(Order $order): JsonResponse
@@ -55,22 +56,21 @@ class OrderController extends BaseController
 
         $order->save();
 
-        return $this->return(responseCode: Response::HTTP_ACCEPTED);
+        return $this->return(compact('order'), responseCode: Response::HTTP_ACCEPTED);
     }
 
     public function destroy(Order $order): JsonResponse
     {
         $order->delete();
 
-        return $this->return();
+        return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 
     public function view($id): JsonResponse
     {
-        $order = Order::findOrFail($id);
-        $post = Post::findOrFail($order->service);
+        $order = Order::with('service')->find($id);
 
-        return $this->return(compact('post', 'order'));
+        return $this->return(compact('order'));
     }
 }
 
