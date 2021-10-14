@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
@@ -19,5 +20,10 @@ class Post extends Model
     public function order(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'post');
     }
 }

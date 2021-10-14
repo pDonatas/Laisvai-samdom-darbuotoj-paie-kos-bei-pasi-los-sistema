@@ -24,7 +24,7 @@ class RatingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vote' => 'required',
+            'vote' => 'required|numeric',
             'comment' => 'string|required'
         ];
     }

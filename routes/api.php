@@ -3,6 +3,8 @@
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\BookmarkController;
+use App\Http\Controllers\API\Categories\PostCategoryController;
+use App\Http\Controllers\API\Categories\Votes\PostCategoryVotesController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\HistoryController;
 use App\Http\Controllers\API\OrderController;
@@ -61,4 +63,17 @@ Route::middleware('jwt')->group(function () {
     Route::get('admin/users', [AdminController::class, 'index'])->name('admin');
     Route::get('admin/verify/user/{id}', [AdminController::class, 'verifyUser'])->name('admin.verify.user');
     Route::get('logout', [AuthController::class, 'logout']);
+    //Lygiai
+    //3 lvl
+    Route::get('/categories/{category:id}/posts/{post:slug}/votes', [PostCategoryVotesController::class, 'index'])->name('posts.store');
+    Route::post('/categories/{category:id}/posts/{post:slug}/votes', [PostCategoryVotesController::class, 'store'])->name('posts.store');
+    Route::get('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'show'])->name('posts.show');
+    Route::delete('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'destroy'])->name('posts.destroy');
+    Route::patch('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'update'])->name('posts.update');
+    //2 lvl
+    Route::get('/categories/{category:id}/posts', [PostCategoryController::class, 'index'])->name('posts.store');
+    Route::post('/categories/{category:id}/posts', [PostCategoryController::class, 'store'])->name('posts.store');
+    Route::get('/categories/{category:id}/posts/{slug}', [PostCategoryController::class, 'show'])->name('posts.show');
+    Route::delete('/categories/{category:id}/posts/{slug}', [PostCategoryController::class, 'destroy'])->name('posts.destroy');
+    Route::patch('/categories/{category:id}/posts/{slug}', [PostCategoryController::class, 'update'])->name('posts.update');
 });
