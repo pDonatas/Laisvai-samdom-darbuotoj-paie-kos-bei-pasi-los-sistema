@@ -45,10 +45,10 @@ Route::middleware('jwt')->group(function () {
     Route::post("/search", [SearchController::class, 'search'])->name('search');
     //Balsavimas
     Route::delete('vote/{id}', [RatingController::class, 'remove'])->name('vote.remove');
-    Route::post('vote/{id}', [RatingController::class, 'vote'])->name('vote');
+    Route::post('/posts/{id}/vote', [RatingController::class, 'vote'])->name('vote');
     Route::post('sort', [RatingController::class, 'sort'])->name('sort');
     //Mėgstamiausi
-    Route::get('bookmark/{post}', [BookmarkController::class, 'bookmark'])->name('bookmark');
+    Route::get('/posts/{post}/bookmark', [BookmarkController::class, 'bookmark'])->name('bookmark');
     //Vartotojai
     Route::resource('user', API\UserController::class);
     //Istorija
