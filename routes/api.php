@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\BookmarkController;
+use App\Http\Controllers\API\Categories\Bookmarks\PostCategoryBookmarksController;
 use App\Http\Controllers\API\Categories\PostCategoryController;
 use App\Http\Controllers\API\Categories\Votes\PostCategoryVotesController;
 use App\Http\Controllers\API\CategoryController;
@@ -70,6 +71,12 @@ Route::middleware('jwt')->group(function () {
     Route::get('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'show'])->name('posts.show');
     Route::delete('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'destroy'])->name('posts.destroy');
     Route::patch('/categories/{category:id}/posts/{post:slug}/votes/{rating:id}', [PostCategoryVotesController::class, 'update'])->name('posts.update');
+    //Bookmarks
+    Route::get('/users/{user:id}/posts/{post:slug}/bookmarks', [PostCategoryBookmarksController::class, 'index'])->name('posts.store');
+    Route::post('/users/{user:id}/posts/{post:slug}/bookmarks', [PostCategoryBookmarksController::class, 'store'])->name('posts.store');
+    Route::get('/users/{user:id}/posts/{post:slug}/bookmarks/{bookmark}', [PostCategoryBookmarksController::class, 'show'])->name('posts.show');
+    Route::delete('/users/{user:id}/posts/{post:slug}/bookmarks/{bookmark}', [PostCategoryBookmarksController::class, 'destroy'])->name('posts.destroy');
+    Route::patch('/users/{user:id}/posts/{post:slug}/bookmarks/{bookmark}', [PostCategoryBookmarksController::class, 'update'])->name('posts.update');
     //2 lvl
     Route::get('/categories/{category:id}/posts', [PostCategoryController::class, 'index'])->name('posts.store');
     Route::post('/categories/{category:id}/posts', [PostCategoryController::class, 'store'])->name('posts.store');
