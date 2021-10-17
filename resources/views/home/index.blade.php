@@ -79,7 +79,7 @@
                                     <div class="courses-box-footer">
                                         <ul>
                                             <li class="students-number">
-                                                <i class='bx bx-user'></i> {{App\Order::where('service', $post->id)->count()}} students
+                                                <i class='bx bx-user'></i> {{App\Order::count()}} students
                                             </li>
                                             <li class="courses-price">
                                                 {{$post->price}} &euro;
