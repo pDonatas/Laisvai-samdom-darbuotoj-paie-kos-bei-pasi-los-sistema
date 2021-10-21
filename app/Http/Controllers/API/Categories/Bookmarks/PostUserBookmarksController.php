@@ -20,21 +20,14 @@ use Illuminate\Support\Str;
 use Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostCategoryBookmarksController extends BaseController
+class PostUserBookmarksController extends BaseController
 {
-    protected TagsService $tagsService;
-    protected RatingsService $ratingsService;
-    protected RatingFactory$ratingFactory;
 
-    public function __construct(TagsService $tagsService, RatingsService $ratingsService, RatingFactory $ratingFactory)
-    {
-        $this->tagsService = $tagsService;
-        $this->ratingsService = $ratingsService;
-        $this->ratingFactory = $ratingFactory;
-    }
+
 
     public function index(User $user, Post $post)
     {
+
         return $this->return(['bookmarks' => Bookmark::where('post', $post->id)->get()]);
     }
 
@@ -51,8 +44,12 @@ class PostCategoryBookmarksController extends BaseController
 
     public function show(User $user, $post, $bookmark): JsonResponse
     {
-        $bookmark = Bookmark::findOrFail($bookmark);
+        $post = Post::where('slug', $post)->first();
+        $bookmark = Bookmark::where('id',$bookmark)->where('user_id',$user->id)->where('post', $post->id)->first();
 
+        if($bookmark == null)
+            return $this->return(responseCode: Response::HTTP_NOT_FOUND);
+        ///$bookmark = Bookmark::findOrFail($bookmark);
         return $this->return(compact('bookmark'));
     }
 
@@ -60,7 +57,7 @@ class PostCategoryBookmarksController extends BaseController
     {
         $bookmark = Bookmark::findOrFail($bookmark);
 
-        if (!$bookmark->user_id == Auth::id()) {
+        if ($bookmark->user_id != Auth::id()) {
             return $this->return([
                 'error' => 'You can not edit this bookmark'
             ], Response::HTTP_FORBIDDEN);
@@ -75,9 +72,9 @@ class PostCategoryBookmarksController extends BaseController
     {
         $bookmark = Bookmark::findOrFail($bookmark);
 
-        if (!$bookmark->user_id == Auth::id()) {
+        if ($bookmark->user_id != Auth::id()) {
             return $this->return([
-                'error' => 'You can not delete this vote'
+                'error' => 'You can not delete this bookmark'
             ], Response::HTTP_FORBIDDEN);
         }
 
