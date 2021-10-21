@@ -31,10 +31,10 @@
                                     <a href="#">{{\App\Category::find($post->category)->name}}</a>
                                 </li>
                                 <li>
-                                    <i class='bx bx-group'></i>
+                                {{--    <i class='bx bx-group'></i>
                                     <span>{{__('orders.already_bought')}}</span>
                                     <a href="#">{{\App\Order::where('service', $post->id)->count()}}</a>
-                                </li>
+                                </li>--}}
                             </ul>
                         </div>
                     </div>
@@ -74,9 +74,9 @@
                     <div class="courses-sidebar-information">
                         <ul>
                             <li>
-                                <span><i class='bx bx-group'></i> {{__('orders.already_bought')}}</span>
+                            {{--    <span><i class='bx bx-group'></i> {{__('orders.already_bought')}}</span>
                                 {{\App\Order::where('service', $post->id)->count()}}
-                            </li>
+                            </li>--}}
                             <li>
                                 <span><i class='bx bxs-graduation'></i> {{__('orders.category')}}</span>
                                 {{\App\Category::find($post->category)->name}}
