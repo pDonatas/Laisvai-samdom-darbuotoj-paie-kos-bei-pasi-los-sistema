@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Session;
 
 class RatingController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function vote(Request $request, $post){
         $rs = new RatingsService();
         if($rs->exists($post)) {
@@ -33,6 +39,9 @@ class RatingController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function show($post){
         if(!Session::has('sort'))
             Session::put('sort', '1');
@@ -50,6 +59,9 @@ class RatingController extends Controller
         ]);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function sort(Request $request){
         $data = $request->input("sort");
         Session::forget("sort");
@@ -57,6 +69,9 @@ class RatingController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function remove($id)
     {
         $vote = Rating::findOrFail($id);

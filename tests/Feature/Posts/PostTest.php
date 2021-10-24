@@ -24,31 +24,31 @@ class PostTest extends TestCase
         $response->assertSuccessful();
         $response->assertViewIs('posts.create');
     }
-    /**
-     * @depends test_user_can_see_post_create_page
-     */
-    public function test_user_can_create_post():Post
-    {
-
-        $user = User::factory()->create([
-            'type' => 1,
-            'token' => "ZEhoK1J4ME1MbEJjYzVwNEMxUy9wdnR5NUx5eXZ1aFR3NmkwL1VDRk13UT0="
-        ]);
-        $this->actingAs($user);
-        $post = Post::factory()->make();
-        $response = $this->withHeader('Authorization', 'Bearer ' . $user->token)->json
-        (
-            'post',
-            'api/posts',
-        [
-            'title' => $post->title,
-            'content' => $post->content,
-            'category' => $post->category,
-            'price' => $post->price,
-
-        ]);
-        $response->assertStatus(201);
-        return $post;
-
-    }
+//    /**
+//     * @depends test_user_can_see_post_create_page
+//     */
+//    public function test_user_can_create_post():Post
+//    {
+//
+//        $user = User::factory()->create([
+//            'type' => 1,
+//            'token' => "ZEhoK1J4ME1MbEJjYzVwNEMxUy9wdnR5NUx5eXZ1aFR3NmkwL1VDRk13UT0="
+//        ]);
+//        $this->actingAs($user);
+//        $post = Post::factory()->make();
+//        $response = $this->withHeader('Authorization', 'Bearer ' . $user->token)->json
+//        (
+//            'post',
+//            'api/posts',
+//        [
+//            'title' => $post->title,
+//            'content' => $post->content,
+//            'category' => $post->category,
+//            'price' => $post->price,
+//
+//        ]);
+//        $response->assertStatus(201);
+//        return $post;
+//
+//    }
 }

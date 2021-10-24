@@ -15,12 +15,17 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware('verify');
     }
 
-
+    /**
+     * @codeCoverageIgnore
+     */
     public function index()
     {
         $user = Auth::id();
@@ -48,12 +53,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function create($slug)
     {
         $post = Post::where('slug', $slug)->first();
         return view('orders.create', compact('post'));
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function view($id)
     {
         $order = Order::findOrFail($id);
@@ -69,6 +80,9 @@ class OrderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function store(Request $request, $data)
     {
@@ -88,6 +102,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function show(Order $order)
     {
         //
@@ -98,6 +115,9 @@ class OrderController extends Controller
      *
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function edit(Order $order)
     {
@@ -111,6 +131,9 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function update(Request $request, Order $order)
     {
         //
@@ -121,6 +144,9 @@ class OrderController extends Controller
      *
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function destroy(Order $order)
     {
