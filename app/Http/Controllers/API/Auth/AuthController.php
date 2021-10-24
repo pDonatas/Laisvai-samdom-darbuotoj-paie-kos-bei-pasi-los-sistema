@@ -60,10 +60,6 @@ class AuthController extends BaseController
     {
         $user = User::where('email', $request->get('email'))->first();
 
-        if ($user) {
-            throw new InvalidUserException("This user already exists");
-        }
-
         $user = User::create($request->toArray());
         $user->update([
             'password' => Hash::make($request->get('password'))

@@ -9,21 +9,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Mockery;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\BaseTestCase;
 use Tests\TestCase;
 use Faker\Factory;
 
 /**
  * @covers \App\Http\Controllers\API\Auth\AuthController
  */
-class AuthControllerTest extends TestCase
+class AuthControllerTest extends BaseTestCase
 {
     use RefreshDatabase;
-
-    /** @var \App\Http\Requests\LoginRequest */
-    private $rules;
-
-    /** @var \Illuminate\Validation\Validator */
-    private $validator;
 
     protected User $user;
 
@@ -167,29 +162,5 @@ class AuthControllerTest extends TestCase
         $this->get('/logout');
         $this->assertGuest();
         $this->assertJson(json_encode(['success' => 'User logged out successfully']));
-    }
-
-    /**
-     * @covers \App\Http\Controllers\API\Auth\AuthController::register
-     */
-    public function test_register()
-    {
-        $user = User::factory()->create([
-            'password' => bcrypt($password = 'test user pass'),
-        ]);
-
-        $response = $this->post('/register', [
-            'email' => $user->email,
-            'password' => $password,
-        ]);
-
-        $response->assertRedirect('/');
-    }
-
-    protected function validate($mockedRequestData)
-    {
-        return $this->validator
-            ->make($mockedRequestData, $this->rules)
-            ->passes();
     }
 }
