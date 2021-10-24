@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email'
         ];
 
-        if ($this->route()->getActionMethod() == 'register' || $this->route()->getActionMethod() == 'store') {
+        if ($this->route() !== null && ($this->route()->getActionMethod() == 'register' || $this->route()->getActionMethod() == 'store')) {
             $rules['password'] = 'required|string';
             $rules['confirm_password'] = 'required|same:password';
             $rules['email'] = 'required|email|unique:users';
