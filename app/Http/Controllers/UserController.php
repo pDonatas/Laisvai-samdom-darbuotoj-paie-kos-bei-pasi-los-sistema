@@ -9,15 +9,20 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct() {
         $this->middleware('auth');
     }
-
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function index()
     {
@@ -28,6 +33,9 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function create()
     {
@@ -40,6 +48,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function store(Request $request)
     {
         //
@@ -50,6 +61,9 @@ class UserController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function show($id)
     {
@@ -62,6 +76,9 @@ class UserController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function edit($id)
     {
@@ -76,6 +93,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function update(Request $request, $id)
     {
@@ -120,6 +140,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function destroy($id)
     {
         //
@@ -129,6 +152,9 @@ class UserController extends Controller
      * Rodomas puslapis slaptažodžio keitimui
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function password_change(){
         return view('user.change_password');
     }
@@ -137,6 +163,9 @@ class UserController extends Controller
      * Išsaugojamas pakeistas slaptažodis
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function store_password(Request $request)
     {

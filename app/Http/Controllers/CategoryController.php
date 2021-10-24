@@ -7,17 +7,27 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware(['auth', 'admin']);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function index()
     {
 
         $categories = Category::all();
         return view('categories.index',['categories'=>$categories]);
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function store(Request $request)
     {
         $validatedData = $this->validate($request, [
@@ -29,6 +39,10 @@ class CategoryController extends Controller
 
         return redirect()->route('categories')->withSuccess('You have successfully created a Category!');
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function update(Request $request, $category)
     {
         $validatedData = $this->validate($request, [
@@ -39,6 +53,10 @@ class CategoryController extends Controller
 
         return redirect()->route('categories')->withSuccess('You have successfully updated a Category!');
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function destroy($category)
     {
         $category = Category::find($category);

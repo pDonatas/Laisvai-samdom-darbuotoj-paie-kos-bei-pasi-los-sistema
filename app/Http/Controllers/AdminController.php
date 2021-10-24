@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware(['auth', 'admin']);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function index(){
         $verified = User::where('type','>', 0)->get();
         $waiting = User::where('type', 0)->get();
@@ -21,6 +27,9 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function verifyUser($id){
         $user = User::find($id);
         $user->type = 1;

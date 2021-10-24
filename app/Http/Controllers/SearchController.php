@@ -13,6 +13,9 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function search(Request $request)
     {
         $helpers = new Helpers();

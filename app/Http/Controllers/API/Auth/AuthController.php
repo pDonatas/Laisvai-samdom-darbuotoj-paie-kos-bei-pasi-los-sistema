@@ -19,6 +19,9 @@ class AuthController extends BaseController
 {
     protected TokenService $tokenService;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct(TokenService $tokenService)
     {
         $this->tokenService = $tokenService;

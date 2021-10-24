@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware(['auth', 'verify']);
@@ -21,6 +24,9 @@ class PostController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function index()
     {
@@ -36,6 +42,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function create()
     {
         // Show create post for
@@ -48,6 +57,9 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function store(Request $request)
     {
@@ -86,6 +98,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function show($post)
     {
         $post = Post::where('slug', $post)->first();
@@ -103,6 +118,9 @@ class PostController extends Controller
      *
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function edit($post)
     {
@@ -124,6 +142,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function update(Request $request, $post)
     {
@@ -169,6 +190,9 @@ class PostController extends Controller
      *
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function destroy($post)
     {

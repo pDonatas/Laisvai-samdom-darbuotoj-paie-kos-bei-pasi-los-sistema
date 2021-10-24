@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class GuestController extends Controller
 {
-
+    /**
+     * @codeCoverageIgnore
+     */
     public function home(){
         $posts = Post::all();
         $categories = Category::all();
@@ -29,10 +31,16 @@ class GuestController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    /**
+     * @codeCoverageIgnore
+     */
     public function index()
     {
         return view('Contacts.contacts');
     }
+    /**
+     * @codeCoverageIgnore
+     */
     public function contactform(Request $request)
     {
         $headers = 	"From: Contact Form <contact@mydomain.com>" . "\r\n" .
@@ -46,6 +54,9 @@ class GuestController extends Controller
         return viev('Contacts.contacts',['success'=>1]);
 
     }
+    /**
+     * @codeCoverageIgnore
+     */
     public function privacypolicy()
     {
         return view('PrivacyPolicy.PrivacyPolicy');

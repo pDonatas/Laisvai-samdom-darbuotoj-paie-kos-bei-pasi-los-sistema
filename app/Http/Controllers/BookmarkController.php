@@ -9,11 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class BookmarkController extends Controller
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function bookmark($post){
         $bs = new BookmarksService();
         if($bs->isBookmarked($post)){

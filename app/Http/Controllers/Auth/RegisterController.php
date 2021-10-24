@@ -29,12 +29,18 @@ class RegisterController extends Controller
      *
      * @var string
      */
+    /**
+     * @codeCoverageIgnore
+     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
      *
      * @return void
+     */
+    /**
+     * @codeCoverageIgnore
      */
     public function __construct()
     {
@@ -46,6 +52,9 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
+     */
+    /**
+     * @codeCoverageIgnore
      */
     protected function validator(array $data)
     {
@@ -61,6 +70,9 @@ class RegisterController extends Controller
      *
      * @param  array  $data
      * @return \App\User
+     */
+    /**
+     * @codeCoverageIgnore
      */
     protected function create(array $data)
     {
