@@ -15,7 +15,7 @@ class verify
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->type == 0){
+        if ($request->user()->type == 0) {
             return redirect('home');
         }
 
