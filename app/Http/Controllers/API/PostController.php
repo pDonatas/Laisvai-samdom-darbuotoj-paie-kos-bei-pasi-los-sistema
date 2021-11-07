@@ -99,7 +99,7 @@ class PostController extends BaseController
             }
 
             // Redirect the user to the created post woth an updated notification
-            return $this->return(compact('post'), Response::HTTP_ACCEPTED);
+            return $this->return(compact('post'), Response::HTTP_OK);
         }
 
         return $this->return([
