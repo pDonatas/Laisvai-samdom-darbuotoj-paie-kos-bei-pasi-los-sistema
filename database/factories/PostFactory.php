@@ -26,8 +26,6 @@ class PostFactory extends Factory
             'title' => 'Title',
             'content' => 'Siuloma pagalba IT srityje',
             'category' => '1',
-            'slug' => 'naujas',
-            'user_id' => Auth::id(),
             'price' => 5,
         ];
     }
