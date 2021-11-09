@@ -78,7 +78,7 @@ class PostOrderController extends BaseController
 
     public function view(string $slug, $id): JsonResponse
     {
-        $order = Order::with('service')->find($id);
+        $order = Order::with('service')->findOrFail($id);
         return $this->return(compact('order'));
     }
 }

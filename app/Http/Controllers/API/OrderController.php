@@ -23,13 +23,14 @@ class OrderController extends BaseController
     public function index(): JsonResponse
     {
         $orders = Auth::user()->orders()->with('service')->get();
-
+        if($orders == null)
+            $this->return(responseCode:Response::HTTP_NOT_FOUND);
         return $this->return(compact('orders'));
     }
 
-    public function store(OrderRequest $request, $data): JsonResponse
+    public function store(OrderRequest $request): JsonResponse
     {
-        $post = Post::where('slug', $data)->first();
+        $post = Post::where('slug', $request->input('slug'))->first();
         if (!$post) {
             return $this->return(['error' => 'This post does not exist!'], Response::HTTP_BAD_REQUEST);
         }
@@ -47,6 +48,8 @@ class OrderController extends BaseController
 
     public function show(Order $order): JsonResponse
     {
+        if($order == null)
+            $this->return(responseCode: Response::HTTP_NOT_FOUND);
         return $this->return(compact('order'));
     }
 
@@ -70,7 +73,7 @@ class OrderController extends BaseController
 
     public function view($id): JsonResponse
     {
-        $order = Order::with('service')->find($id);
+        $order = Order::with('service')->findOrFail($id);
         return $this->return(compact('order'));
     }
 }

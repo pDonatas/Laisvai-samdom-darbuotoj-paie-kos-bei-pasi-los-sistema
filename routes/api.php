@@ -62,7 +62,7 @@ Route::middleware('jwt')->group(function () {
     //Užsakymai
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'view'])->name('orders.view');
-    Route::post('/orders/{slug}', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::patch('/orders/{id}', [PostController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{id}', [orderController::class, 'destroy'])->name('orders.destroy');
     //AdminController
