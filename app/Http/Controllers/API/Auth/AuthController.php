@@ -36,7 +36,7 @@ class AuthController extends BaseController
         }
 
         if (Hash::check($request->get('password'), $user->password)) {
-            $token = $this->tokenService->encryptToken(json_encode(['expire' => strtotime('+2 days')]));
+            $token = $this->tokenService->encryptToken(json_encode(['email' => $user->email, 'expire' => strtotime('+2 days')]));
 
             $user->update([
                 'token' => $token
