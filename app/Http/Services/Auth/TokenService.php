@@ -3,6 +3,8 @@
 namespace App\Http\Services\Auth;
 
 use App\Exceptions\InvalidTokenException;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class TokenService
 {
@@ -12,25 +14,37 @@ class TokenService
 
     public function encryptToken(string $data): string
     {
-        $key = hash('sha256', self::SECRET_KEY);
-        $iv = substr(hash('sha256', self::SECRET_IV), 0, 16);
-        $output = openssl_encrypt($data, self::METHOD, $key, 0, $iv);
+        $key = self::SECRET_KEY;
+        $payload = array(
+            "data" => $data,
+        );
 
-        return base64_encode($output);
+        /**
+         * IMPORTANT:
+         * You must specify supported algorithms for your application. See
+         * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
+         * for a list of spec-compliant algorithms.
+         */
+        $jwt = JWT::encode($payload, $key, 'HS256');
+
+        return $jwt;
     }
 
     public function decryptToken(string $token): array
     {
-        $key = hash('sha256', self::SECRET_KEY);
-        $iv = substr(hash('sha256', self::SECRET_IV), 0, 16); // sha256 is hash_hmac_algo
+        try {
+        $decoded = JWT::decode($token, new Key(self::SECRET_KEY, 'HS256'));
+        } catch(\Exception $e) {
+            throw new InvalidTokenException("Provided token is not valid");
+        }
 
-        $decodedString = openssl_decrypt(base64_decode($token), self::METHOD, $key, 0, $iv);
+            $decodedString = $decoded;
 
         if (!$decodedString) {
             throw new InvalidTokenException("Provided token is not valid");
         }
 
-        $data = json_decode($decodedString, true);
+        $data = json_decode($decodedString->data, true);
         if (!$data) {
             throw new InvalidTokenException("Provided token is not valid");
         }
