@@ -8,9 +8,9 @@ use Firebase\JWT\Key;
 
 class TokenService
 {
-    protected const METHOD = "AES-256-CBC";
-    protected const SECRET_KEY =  'Laboras4741148551';
-    protected const SECRET_IV = "laboras4.";
+    const METHOD = "AES-256-CBC";
+    const SECRET_KEY =  'Laboras4741148551';
+    const SECRET_IV = "laboras4.";
 
     public function encryptToken(string $data): string
     {
@@ -33,16 +33,12 @@ class TokenService
     public function decryptToken(string $token): array
     {
         try {
-        $decoded = JWT::decode($token, new Key(self::SECRET_KEY, 'HS256'));
-        } catch(\Exception $e) {
+            $decoded = JWT::decode($token, new Key(self::SECRET_KEY, 'HS256'));
+        } catch (\Exception $e) {
             throw new InvalidTokenException("Provided token is not valid");
         }
 
-            $decodedString = $decoded;
-
-        if (!$decodedString) {
-            throw new InvalidTokenException("Provided token is not valid");
-        }
+        $decodedString = $decoded;
 
         $data = json_decode($decodedString->data, true);
         if (!$data) {
