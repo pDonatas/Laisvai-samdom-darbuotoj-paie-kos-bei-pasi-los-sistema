@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Routing\Route;
 
 class UserRequest extends FormRequest
 {
@@ -34,7 +35,10 @@ class UserRequest extends FormRequest
             'email' => 'required|email'
         ];
 
-        if ($this->route() !== null && ($this->route()->getActionMethod() == 'register' || $this->route()->getActionMethod() == 'store')) {
+        /** @var Route $route */
+        $route = $this->route();
+
+        if ($route !== null && ($route->getActionMethod() == 'register' || $route->getActionMethod() == 'store')) {
             $rules['password'] = 'required|string';
             $rules['confirm_password'] = 'required|same:password';
             $rules['email'] = 'required|email|unique:users';

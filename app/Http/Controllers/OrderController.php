@@ -89,7 +89,6 @@ class OrderController extends Controller
         $post = Post::where('slug', $data)->first();
         $order = new Order();
         $order->user_id = Auth::id();
-        $order->service = $post->id;
         $order->requirement = $request->input('requirements');
         $order->save();
 

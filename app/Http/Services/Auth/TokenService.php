@@ -8,9 +8,9 @@ use Firebase\JWT\Key;
 
 class TokenService
 {
-    const METHOD = "AES-256-CBC";
-    const SECRET_KEY =  'Laboras4741148551';
-    const SECRET_IV = "laboras4.";
+    protected const METHOD = "AES-256-CBC";
+    protected const SECRET_KEY =  'Laboras4741148551';
+    protected const SECRET_IV = "laboras4.";
 
     public function encryptToken(string $data): string
     {

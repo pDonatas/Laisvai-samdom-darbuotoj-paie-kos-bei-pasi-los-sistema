@@ -5,9 +5,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 
-class Language {
+class Language
+{
+    protected Application $app;
+    protected Request $request;
 
-    public function __construct(Application $app, Request $request) {
+    public function __construct(Application $app, Request $request)
+    {
         $this->app = $app;
         $this->request = $request;
     }
@@ -25,5 +29,4 @@ class Language {
 
         return $next($request);
     }
-
 }

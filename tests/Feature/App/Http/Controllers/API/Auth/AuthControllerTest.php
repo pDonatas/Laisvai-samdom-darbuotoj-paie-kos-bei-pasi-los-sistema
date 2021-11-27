@@ -4,6 +4,7 @@ namespace Tests\Feature\App\Http\Controllers\API\Auth;
 
 use App\Http\Requests\LoginRequest;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -75,7 +76,7 @@ class AuthControllerTest extends BaseTestCase
      */
     public function test_user_cannot_view_a_login_form_when_authenticated()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create()->first();
 
         $response = $this->actingAs($user)->get('/login');
 
@@ -111,7 +112,7 @@ class AuthControllerTest extends BaseTestCase
     /**
      * @covers \App\Http\Controllers\API\Auth\AuthController::login
      */
-    public function test_user_can_login_with_good_credentials(): User
+    public function test_user_can_login_with_good_credentials(): Model
     {
         $user = User::factory()->create([
             'password' => bcrypt($password = 'test user pass'),

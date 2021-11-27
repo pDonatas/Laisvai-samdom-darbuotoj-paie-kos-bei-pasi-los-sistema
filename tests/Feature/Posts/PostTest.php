@@ -22,6 +22,7 @@ class PostTest extends TestCase
             'type' => 1,
             'token' => (new TokenService)->encryptToken(json_encode(['expire' => strtotime('+2 days')]))
         ]);
+        // @phpstan-ignore-next-line
         $this->actingAs($user);
         $response = $this->withHeader('Authorization', 'Bearer ' . $user->token)->getJson('/api/posts');
         $response->assertStatus(200);
