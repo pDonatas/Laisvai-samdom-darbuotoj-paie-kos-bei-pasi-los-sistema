@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -12,7 +13,8 @@ class GuestController extends Controller
     /**
      * @codeCoverageIgnore
      */
-    public function home(){
+    public function home()
+    {
         $posts = Post::all();
         $categories = Category::all();
 
@@ -41,7 +43,7 @@ class GuestController extends Controller
     /**
      * @codeCoverageIgnore
      */
-    public function contactform(Request $request)
+    public function contactform(Request $request): View
     {
         $headers = 	"From: Contact Form <contact@mydomain.com>" . "\r\n" .
             "Reply-To: ".$request->input('email') . "\r\n" .
@@ -50,14 +52,14 @@ class GuestController extends Controller
         $to = 'contact@hyvor.com';
         $subject = 'Contacting you';
 
-        mail($to, $subject,$request->input('message') , $headers);
-        return viev('Contacts.contacts',['success'=>1]);
+        mail($to, $subject, $request->input('message'), $headers);
 
+        return view('Contacts.contacts', ['success'=>1]);
     }
     /**
      * @codeCoverageIgnore
      */
-    public function privacypolicy()
+    public function privacypolicy(): View
     {
         return view('PrivacyPolicy.PrivacyPolicy');
     }

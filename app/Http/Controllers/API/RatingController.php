@@ -55,6 +55,7 @@ class RatingController extends BaseController
         }
 
         $sort = Session::get('sort');
+        $rts = null;
         //Pagal balsus
         if ($sort == 0) {
             $rts = Rating::where('post', $post)->orderBy('vote')->get();
@@ -76,7 +77,7 @@ class RatingController extends BaseController
 
     public function remove(Rating $vote): JsonResponse
     {
-        if (!$vote->user === Auth::id()) {
+        if (!$vote->user == Auth::id()) {
             return $this->return([
                 'error' => 'You can not remove this vote'
             ], Response::HTTP_FORBIDDEN);

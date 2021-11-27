@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Routing\Route;
 
 class PostRequest extends FormRequest
 {
@@ -21,7 +22,10 @@ class PostRequest extends FormRequest
             'img' => 'sometimes|file|mimes:jpeg,bmp,png,gif,svg'
         ];
 
-        if ($this->route()->getActionMethod() == 'update') {
+        /** @var Route $route */
+        $route = $this->route();
+
+        if ($route->getActionMethod() == 'update') {
             $rules['title'] = 'required|string|min:5|max:100';
         }
 

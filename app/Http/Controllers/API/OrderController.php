@@ -23,8 +23,9 @@ class OrderController extends BaseController
     public function index(): JsonResponse
     {
         $orders = Auth::user()->orders()->with('service')->get();
-        if($orders == null)
-            $this->return(responseCode:Response::HTTP_NOT_FOUND);
+        if ($orders == null) {
+            $this->return(responseCode: Response::HTTP_NOT_FOUND);
+        }
         return $this->return(compact('orders'));
     }
 
@@ -41,6 +42,7 @@ class OrderController extends BaseController
 
         $order->save();
 
+        // @phpstan-ignore-next-line
         $order->service()->attach($post);
 
         return $this->return(compact('order'), responseCode: Response::HTTP_CREATED);
@@ -48,32 +50,28 @@ class OrderController extends BaseController
 
     public function show(Order $order): JsonResponse
     {
-        if($order == null)
-            $this->return(responseCode: Response::HTTP_NOT_FOUND);
         return $this->return(compact('order'));
     }
 
     public function update(OrderRequest $request, $id): JsonResponse
     {
         $order = Order::find($id);
+
         return $this->return(compact('order'));
-        $order->factory->update($request->toArray());
-
-        $order->save();
-
-        return $this->return(compact('order'), responseCode: Response::HTTP_OK);
     }
 
     public function destroy($id): JsonResponse
     {
         $order = Order::with('service')->find($id);
         $order->delete();
+
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 
     public function view($id): JsonResponse
     {
         $order = Order::with('service')->findOrFail($id);
+
         return $this->return(compact('order'));
     }
 }

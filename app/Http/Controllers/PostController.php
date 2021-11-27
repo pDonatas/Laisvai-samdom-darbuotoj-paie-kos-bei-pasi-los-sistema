@@ -49,7 +49,7 @@ class PostController extends Controller
     {
         // Show create post for
         $categories = Category::all();
-        return view('posts.create',['categories'=>$categories]);
+        return view('posts.create', ['categories'=>$categories]);
     }
 
     /**
@@ -74,7 +74,7 @@ class PostController extends Controller
 
         $file = $request->file('img');
         $destinationPath = 'assets/img/posts';
-        $file->move($destinationPath,$file->getClientOriginalName());
+        $file->move($destinationPath, $file->getClientOriginalName());
         $img = '/'.$destinationPath.'/'.$file->getClientOriginalName();
         $validated['img'] = $img;
 
@@ -104,7 +104,9 @@ class PostController extends Controller
     public function show($post)
     {
         $post = Post::where('slug', $post)->first();
-        if(!$post) abort(404);
+        if (!$post) {
+            abort(404);
+        }
         $rate = RatingsService::overall($post->id);
         // Pass current post to view
         return view('posts.show', [
@@ -125,13 +127,13 @@ class PostController extends Controller
     public function edit($post)
     {
         $post = Post::where('slug', $post)->first();
-        if($post->user_id == Auth::id()) {
+        if ($post->user_id == Auth::id()) {
             $categories = Category::all();
             return view('posts.edit', [
                 'post' => $post,
                 'categories' => $categories
             ]);
-        }else{
+        } else {
             return redirect()->back();
         }
     }
@@ -149,7 +151,7 @@ class PostController extends Controller
     public function update(Request $request, $post)
     {
         $post = Post::where('slug', $post)->first();
-        if($post->user_id == Auth::id()) {
+        if ($post->user_id == Auth::id()) {
             // Validate posted form data
             $validated = $request->validate([
                 'title' => 'required|string|min:5|max:100',
@@ -159,12 +161,12 @@ class PostController extends Controller
             ]);
 
             if ($request->file('img') !== null) {
-                $request->validate([
+                $validatedImage = $request->validate([
                     'img' => 'file|mimes:jpeg,bmp,png,gif,svg'
                 ]);
-                $file = $request->file('img');
+                $file = $validatedImage['img'];
                 $destinationPath = 'assets/img/posts';
-                $file->move($destinationPath,$file->getClientOriginalName());
+                $file->move($destinationPath, $file->getClientOriginalName());
                 $img = '/'.$destinationPath.'/'.$file->getClientOriginalName();
                 $post->update([
                     'img' => $img
@@ -182,7 +184,9 @@ class PostController extends Controller
 
             // Redirect the user to the created post woth an updated notification
             return redirect(route('posts.show', [$post->slug]))->with('notification', 'Post updated!');
-        }else return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -197,7 +201,7 @@ class PostController extends Controller
     public function destroy($post)
     {
         $post = Post::where('slug', $post)->first();
-        if($post->user_id == Auth::id()) {
+        if ($post->user_id == Auth::id()) {
             // Delete the specified Post
             $post->delete();
             $rs = new RatingsService();
@@ -208,7 +212,7 @@ class PostController extends Controller
 
             // Redirect user with a deleted notification
             return redirect(route('home'));
-        }else{
+        } else {
             return redirect()->back();
         }
     }

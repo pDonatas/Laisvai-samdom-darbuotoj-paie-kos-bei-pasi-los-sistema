@@ -25,8 +25,8 @@ class LogoutMethodTest extends TestCase
 
 
         $mock = $this->mock(TokenService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('encryptToken')->once()->andReturn('WCtJYzV1TEtiRCt2cHdQYkNqbytuelFEMVY5L3RvTGZ1SWZjM216cDZYTT0=');
-            $mock->shouldReceive('decryptToken')->once()->andReturn([0 => 0]);
+            $mock->shouldReceive('encryptToken')->andReturn('WCtJYzV1TEtiRCt2cHdQYkNqbytuelFEMVY5L3RvTGZ1SWZjM216cDZYTT0=');
+            $mock->shouldReceive('decryptToken')->andReturn([0 => 0]);
         });
 
         $this->service = $mock;

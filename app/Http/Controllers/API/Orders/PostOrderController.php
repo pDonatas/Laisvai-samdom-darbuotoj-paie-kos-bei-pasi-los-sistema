@@ -29,11 +29,10 @@ class PostOrderController extends BaseController
 
     public function index(string $slug): JsonResponse
     {
-
         return $this->return(['orders' => Order::with('service')->get()]);
     }
 
-    public function store(OrderRequest $request,string $slug): JsonResponse
+    public function store(OrderRequest $request, string $slug): JsonResponse
     {
         $post = Post::where('slug', $slug)->first();
         if (!$post) {
@@ -51,17 +50,10 @@ class PostOrderController extends BaseController
         return $this->return(compact('order'), responseCode: Response::HTTP_CREATED);
     }
 
-    /*public function show(Order $order, string $slug): JsonResponse
-    {
-        $posts = $order->service();
-       /// $post = Post::where(['slug' => $slug])->first();
-        return $this->return(compact('posts'));
-    }*/
-
-    public function update(string $slug,OrderRequest $request, $id): JsonResponse
+    public function update(string $slug, OrderRequest $request, $id): JsonResponse
     {
         $order = Order::with('service')->find($id);
-        $order->factory->update($request->toArray());
+        $order->update($request->toArray());
         $order->save();
 
         return $this->return(compact('order'), responseCode: Response::HTTP_OK);
@@ -71,8 +63,8 @@ class PostOrderController extends BaseController
     {
         $post = Post::where('slug', $slug)->first();
         $order = Order::with('service')->find($id);
-        //$order->delete();
         $order->service()->detach($post->id);
+
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }
 
