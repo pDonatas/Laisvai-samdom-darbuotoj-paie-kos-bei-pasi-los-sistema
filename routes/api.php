@@ -13,6 +13,7 @@ use App\Http\Controllers\API\Orders\PostOrderController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\RatingController;
 use App\Http\Controllers\API\SearchController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,7 @@ Route::middleware('jwt')->group(function () {
     //Mėgstamiausi
     Route::get('/posts/{post}/bookmark', [BookmarkController::class, 'bookmark'])->name('bookmark');
     //Vartotojai
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('profile');
     Route::resource('user', API\UserController::class);
     //Istorija
     Route::get('history', [HistoryController::class, 'index'])->name('history');

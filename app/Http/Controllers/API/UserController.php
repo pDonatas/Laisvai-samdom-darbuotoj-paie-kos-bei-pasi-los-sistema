@@ -96,4 +96,9 @@ class UserController extends BaseController
 
         return $this->return(compact('user'), Response::HTTP_CREATED);
     }
+
+    public function profile(): JsonResponse
+    {
+        return \response()->json(Auth::user());
+    }
 }
