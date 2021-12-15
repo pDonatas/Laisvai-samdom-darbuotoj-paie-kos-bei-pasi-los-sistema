@@ -55,9 +55,15 @@ class OrderController extends BaseController
 
     public function update(OrderRequest $request, $id): JsonResponse
     {
-        $order = Order::find($id);
-
-        return $this->return(compact('order'));
+      /*  $order = Order::find($id);
+        $order->update($request->toArray());*/
+        $order = Order::where('id', $id)->first();
+        $array = $request->toArray();
+        $requirement = $array['requirements'];
+        $order->update(['requirement' => $requirement]);
+        $order->save();
+        //$order = Order::find($id);;
+        return $this->return(compact('order'),Response::HTTP_OK);
     }
 
     public function destroy($id): JsonResponse

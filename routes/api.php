@@ -46,7 +46,7 @@ Route::middleware('jwt')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::patch('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     //Paieška
     Route::post("/search", [SearchController::class, 'search'])->name('search');
@@ -65,8 +65,8 @@ Route::middleware('jwt')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/orders/{id}', [OrderController::class, 'view'])->name('orders.view');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::patch('/orders/{id}', [PostController::class, 'update'])->name('orders.update');
-    Route::delete('/orders/{id}', [orderController::class, 'destroy'])->name('orders.destroy');
+    Route::patch('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
     //AdminController
     Route::get('admin/users', [AdminController::class, 'index'])->name('admin');
     Route::get('admin/verify/user/{id}', [AdminController::class, 'verifyUser'])->name('admin.verify.user');
