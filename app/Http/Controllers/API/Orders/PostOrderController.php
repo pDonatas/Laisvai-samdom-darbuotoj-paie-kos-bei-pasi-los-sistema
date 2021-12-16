@@ -68,6 +68,7 @@ class PostOrderController extends BaseController
         $post = Post::where('slug', $slug)->first();
         $order = Order::with('service')->find($id);
         $order->service()->detach($post->id);
+        $order->delete();
 
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }

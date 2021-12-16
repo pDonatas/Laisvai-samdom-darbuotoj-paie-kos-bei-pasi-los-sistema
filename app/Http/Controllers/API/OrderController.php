@@ -69,6 +69,7 @@ class OrderController extends BaseController
     public function destroy($id): JsonResponse
     {
         $order = Order::with('service')->find($id);
+        $order->service()->detach();
         $order->delete();
 
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
