@@ -33,12 +33,15 @@ class PostCategoryVotesController extends BaseController
 
     public function index(Category $category, Post $post)
     {
-        return $this->return(['votes' => Rating::where('post', $post->id)->get()]);
+        return $this->return(['votes' => Rating::with('user')->where('post', $post->id)->get()]);
     }
 
     public function store(Category $category, RatingRequest $request, Post $post): JsonResponse
     {
         $data = $request->toArray();
+        if ($this->ratingsService->voted(Auth::id(), $post->id)) {
+            return $this->return(['errors' => 'You already voted for this post'], responseCode: Response::HTTP_BAD_REQUEST);
+        }
         $data['user'] = Auth::id();
         $data['post'] = $post->id;
         $rating = $this->ratingFactory->create($data, Rating::class);
