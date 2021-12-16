@@ -52,8 +52,12 @@ class PostOrderController extends BaseController
 
     public function update(string $slug, OrderRequest $request, $id): JsonResponse
     {
-        $order = Order::with('service')->find($id);
-        $order->update($request->toArray());
+        $order = Order::where('id', $id)->first();
+        $array = $request->toArray();
+        $requirement = $array['requirements'];
+        $order->update(['requirement' => $requirement]);
+       /* $order = Order::with('service')->find($id);
+        $order->update($request->toArray());*/
         $order->save();
 
         return $this->return(compact('order'), responseCode: Response::HTTP_OK);
@@ -64,6 +68,7 @@ class PostOrderController extends BaseController
         $post = Post::where('slug', $slug)->first();
         $order = Order::with('service')->find($id);
         $order->service()->detach($post->id);
+        $order->delete();
 
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
     }

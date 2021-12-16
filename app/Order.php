@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
+    protected $fillable = ['requirement'];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
