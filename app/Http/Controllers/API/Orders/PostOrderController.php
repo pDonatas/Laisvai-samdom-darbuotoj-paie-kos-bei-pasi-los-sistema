@@ -13,6 +13,7 @@ use App\Http\Services\RatingsService;
 use App\Http\Services\TagsService;
 use App\Order;
 use App\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -29,7 +30,13 @@ class PostOrderController extends BaseController
 
     public function index(string $slug): JsonResponse
     {
-        return $this->return(['orders' => Order::with('service')->get()]);
+       // $orders = Order::with('service')->get();
+        $orders = Order::with('service')->whereHas('service', function (Builder $query) use ($slug) {
+            $query->where('slug', '=', $slug);
+        })->get();
+        return $this->return(compact('orders'));
+        //return $this->return(['orders' => Order::with('service')->get()]);
+
     }
 
     public function store(OrderRequest $request, string $slug): JsonResponse
@@ -52,7 +59,9 @@ class PostOrderController extends BaseController
 
     public function update(string $slug, OrderRequest $request, $id): JsonResponse
     {
-        $order = Order::where('id', $id)->first();
+        $order = Order::with('service')->whereHas('service', function (Builder $query) use ($slug) {
+            $query->where('slug', '=', $slug);
+        })->findOrFail($id);
         $array = $request->toArray();
         $requirement = $array['requirements'];
         $order->update(['requirement' => $requirement]);
@@ -75,7 +84,10 @@ class PostOrderController extends BaseController
 
     public function view(string $slug, $id): JsonResponse
     {
-        $order = Order::with('service')->findOrFail($id);
+        //$order = Order::with('service')->findOrFail($id);
+        $order = Order::with('service')->whereHas('service', function (Builder $query) use ($slug) {
+            $query->where('slug', '=', $slug);
+        })->findOrFail($id);
         return $this->return(compact('order'));
     }
 }
