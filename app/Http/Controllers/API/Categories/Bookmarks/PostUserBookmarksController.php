@@ -25,10 +25,12 @@ class PostUserBookmarksController extends BaseController
 
 
 
-    public function index(User $user, Post $post)
+    public function index($user, Post $post)
     {
-
-        return $this->return(['bookmarks' => Bookmark::where('post', $post->id)->get()]);
+        $user = User::where('id', $user)->first();
+        $bookmarks = Bookmark::where(['post'=> $post->id, 'user_id' => $user->id])->get();
+       // return $this->return(['bookmarks' => Bookmark::where('post', $post->id)->get()]);
+        return $this->return($bookmarks->toArray());
     }
 
     public function store(User $user, $post): JsonResponse
@@ -49,36 +51,42 @@ class PostUserBookmarksController extends BaseController
 
         if($bookmark == null)
             return $this->return(responseCode: Response::HTTP_NOT_FOUND);
-        ///$bookmark = Bookmark::findOrFail($bookmark);
-        return $this->return(compact('bookmark'));
+        //$bookmark = Bookmark::findOrFail($bookmark);
+        return $this->return($bookmark->toArray());
     }
 
-    public function update(User $user, Post $post, $bookmark, \Symfony\Component\HttpFoundation\Request $request): JsonResponse
+    public function update($user, $post, $bookmark, \Symfony\Component\HttpFoundation\Request $request): JsonResponse
     {
-        $bookmark = Bookmark::findOrFail($bookmark);
-
+        //$bookmark = Bookmark::findOrFail($bookmark);
+        $post = Post::where('slug', $post)->first();
+        $user = User::where('id', $user)->first();
+        $bookmark = Bookmark::where('user_id',$user->id)->where('post', $post->id)->findOrFail($bookmark);
         if ($bookmark->user_id != Auth::id()) {
             return $this->return([
                 'error' => 'You can not edit this bookmark'
             ], Response::HTTP_FORBIDDEN);
         }
-
-        $bookmark->update($request->toArray());
+        $array = $request->toArray();
+        $post_id = $array['post'];
+        $bookmark->update(['post' => $post_id]);
+        $bookmark->save();
 
         return $this->return(compact('bookmark'), Response::HTTP_OK);
     }
 
-    public function destroy(User $user, Post $post, $bookmark): JsonResponse
+    public function destroy($user, $post, $bookmark): JsonResponse
     {
-        $bookmark = Bookmark::findOrFail($bookmark);
-
+        //$bookmark = Bookmark::findOrFail($bookmark);
+        $post = Post::where('slug', $post)->first();
+        $user = User::where('id', $user)->first();
+        $bookmark = Bookmark::where('user_id',$user->id)->where('post', $post->id)->findOrFail($bookmark);
         if ($bookmark->user_id != Auth::id()) {
             return $this->return([
                 'error' => 'You can not delete this bookmark'
             ], Response::HTTP_FORBIDDEN);
         }
 
-        // Delete the specified Post
+        // Delete the specified Bookmark
         $bookmark->delete();
 
         return $this->return(responseCode: Response::HTTP_NO_CONTENT);
